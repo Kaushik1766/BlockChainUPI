@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { PaperProvider } from 'react-native-paper';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -17,6 +18,15 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+  // const theme = {
+  //   ...DefaultTheme,
+  //   myOwnProperty: true,
+  //   colors: {
+  //     ...DefaultTheme.colors,
+  //     myOwnColor: '#BADA55',
+  //   },
+  // };
+
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -26,14 +36,19 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    // <ThemeProvider value={DefaultTheme}>
+    <PaperProvider>
+      <ThemeProvider value={DarkTheme}>
+
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </PaperProvider>
+    // </ThemeProvider>
   );
 }
