@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kaushik.blockchainupi"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,12 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "react-native-auth0",
+        {
+          "domain": "dev-avbpamn8nlbn8lg3.us.auth0.com"
         }
       ]
     ],
