@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { DefaultTheme as defaultTheme } from 'react-native-paper';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { PaperProvider } from 'react-native-paper';
@@ -18,14 +19,16 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  // const theme = {
-  //   ...DefaultTheme,
-  //   myOwnProperty: true,
-  //   colors: {
-  //     ...DefaultTheme.colors,
-  //     myOwnColor: '#BADA55',
-  //   },
-  // };
+  const darkTheme = {
+    ...defaultTheme,
+    colors: {
+      ...defaultTheme.colors,
+      primary: '#6200ee',
+      background: '#121212',
+      surface: '#121212',
+      text: '#ffffff',
+    },
+  };
 
   useEffect(() => {
     if (loaded) {
@@ -40,7 +43,7 @@ export default function RootLayout() {
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     // <ThemeProvider value={DefaultTheme}>
     <Auth0Provider domain={"dev-avbpamn8nlbn8lg3.us.auth0.com"} clientId={"AM64NAAD0FEMNNT34XgXHWuNhoTkEmse"}>
-      <PaperProvider>
+      <PaperProvider theme={darkTheme}>
         <ThemeProvider value={DarkTheme}>
 
           <Slot />

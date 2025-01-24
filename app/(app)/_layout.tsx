@@ -1,5 +1,5 @@
 import { Text } from 'react-native';
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, Stack, Tabs } from 'expo-router';
 import { useAuth0 } from 'react-native-auth0';
 import { useEffect } from 'react';
 
@@ -14,10 +14,27 @@ export default function AppLayout() {
     }
 
     if (!user) {
-        return <Redirect href="/login" />;
+        return <Redirect href="/Welcome" />;
     }
 
-    return <Stack>
-        <Stack.Screen name='index' />
-    </Stack>;
+    return <Tabs screenOptions={{ headerShown: false }}>
+        <Tabs.Screen
+            name="index"
+            options={{
+                title: 'Home',
+            }}
+        />
+        <Tabs.Screen
+            name="wallet"
+            options={{
+                title: 'Wallet',
+            }}
+        />
+        <Tabs.Screen
+            name="profile"
+            options={{
+                title: 'Profile',
+            }}
+        />
+    </Tabs>;
 }
