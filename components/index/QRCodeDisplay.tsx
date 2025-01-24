@@ -1,6 +1,7 @@
+import { Link } from "expo-router"
 import type React from "react"
 import { View, StyleSheet } from "react-native"
-import { Text } from "react-native-paper"
+import { Text, useTheme } from "react-native-paper"
 import QRCode from "react-native-qrcode-svg"
 
 interface QRCodeDisplayProps {
@@ -8,10 +9,21 @@ interface QRCodeDisplayProps {
 }
 
 const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ upiId }) => {
+    const theme = useTheme()
     return (
         <View style={styles.container}>
-            <QRCode value={upiId} size={200} color="white" backgroundColor="transparent" />
-            <Text style={styles.label}>Scan to pay</Text>
+            <View style={{ borderRadius: 10, borderColor: theme.colors.primary, borderWidth: 10, padding: 4 }}>
+                <QRCode value={upiId} size={200} color="black" backgroundColor="white" ecl="H" />
+            </View>
+            <Link href={'/(app)/scan'} style={{
+                backgroundColor: theme.colors.primary,
+                fontSize: 16,
+                marginTop: 8,
+                padding: 8,
+                paddingHorizontal: 16,
+                color: "white",
+                borderRadius: 8,
+            }}>Scan to pay</Link>
         </View>
     )
 }
@@ -20,12 +32,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         marginBottom: 24,
-    },
-    label: {
-        marginTop: 8,
-        fontSize: 14,
-        color: "#BDBDBD",
-    },
+    }
 })
 
 export default QRCodeDisplay

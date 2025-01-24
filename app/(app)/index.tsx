@@ -11,9 +11,24 @@ const HomePage: React.FC = () => {
     const { user } = useAuth0()
     const upiId = `${user?.email?.substring(0, user.email.indexOf('@'))}@chainupi`
     const transactions = [
-        { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01" },
-        { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-04-30" },
-        { id: "3", amount: 750, recipient: "Bob Johnson", date: "2023-04-29" },
+        { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01", chain: "ETH", logo: "ETH" },
+        { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-04-30", chain: "MATIC", logo: "MATIC" },
+        { id: "3", amount: 750, recipient: "Bob Johnson", date: "2023-04-29", chain: "ETH", logo: "ETH" },
+        { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01", chain: "MATIC", logo: "MATIC" },
+        { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-04-30", chain: "ETH", logo: "ETH" },
+        { id: "3", amount: 750, recipient: "Bob Johnson", date: "2023-04-29", chain: "MATIC", logo: "MATIC" },
+        { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01", chain: "ETH", logo: "ETH" },
+        { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-04-30", chain: "MATIC", logo: "MATIC" },
+        { id: "3", amount: 750, recipient: "Bob Johnson", date: "2023-04-29", chain: "ETH", logo: "ETH" },
+        { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01", chain: "MATIC", logo: "MATIC" },
+        { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-04-30", chain: "ETH", logo: "ETH" },
+        { id: "3", amount: 750, recipient: "Bob Johnson", date: "2023-04-29", chain: "MATIC", logo: "MATIC" },
+        { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01", chain: "ETH", logo: "ETH" },
+        { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-04-30", chain: "MATIC", logo: "MATIC" },
+        { id: "3", amount: 750, recipient: "Bob Johnson", date: "2023-04-29", chain: "ETH", logo: "ETH" },
+        { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01", chain: "MATIC", logo: "MATIC" },
+        { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-04-30", chain: "ETH", logo: "ETH" },
+        { id: "3", amount: 750, recipient: "Bob Johnson", date: "2023-04-29", chain: "MATIC", logo: "MATIC" },
     ]
 
     const handleScanPay = () => {
