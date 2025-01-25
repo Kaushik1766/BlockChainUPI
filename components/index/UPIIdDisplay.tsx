@@ -1,16 +1,61 @@
-import type React from "react"
+import React from "react"
 import { View, StyleSheet } from "react-native"
-import { Text } from "react-native-paper"
+import { Button, Portal, Text, useTheme } from "react-native-paper"
+import AntDesign from '@expo/vector-icons/AntDesign';
+import QRCodeDisplay from "./QRCodeDisplay";
+import Modal from "react-native-modal";
 
 interface UPIIdDisplayProps {
     upiId: string
 }
 
 const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
+    const [visible, setVisible] = React.useState(false);
+    const theme = useTheme()
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Your UPI ID</Text>
-            <Text style={styles.upiId}>{upiId}</Text>
+            <View style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center"
+            }}>
+                <Text style={styles.upiId}>{upiId}</Text>
+                <AntDesign name="qrcode" size={24} color="white" onPress={showModal} />
+            </View>
+            <Modal
+                isVisible={visible}
+                onDismiss={hideModal}
+                animationIn={'slideInUp'}
+                style={{
+                    justifyContent: 'flex-end',
+                    margin: 0
+                }}
+                onBackdropPress={() => setVisible(false)}
+                onSwipeComplete={() => setVisible(false)}
+                swipeDirection="down"
+                swipeThreshold={50}
+                hideModalContentWhileAnimating={true}
+                useNativeDriver={true}
+                propagateSwipe={true}
+            >
+                <View style={{
+                    backgroundColor: theme.colors.surface,
+                    height: '50%',
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
+                    padding: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <QRCodeDisplay upiId={upiId} />
+                </View>
+            </Modal>
+
         </View>
     )
 }

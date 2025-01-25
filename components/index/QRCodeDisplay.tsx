@@ -12,10 +12,16 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ upiId }) => {
     const theme = useTheme()
     return (
         <View style={styles.container}>
-            <View style={{ borderRadius: 10, borderColor: theme.colors.primary, borderWidth: 10, padding: 4 }}>
+            <Text style={{
+                color: 'white',
+                fontSize: 16,
+                fontWeight: "bold",
+                marginBottom: 8
+            }}>Scan to Pay</Text>
+            <View style={{ borderRadius: 10, borderColor: 'white', borderWidth: 5, padding: 6 }}>
                 <QRCode value={upiId} size={200} color="black" backgroundColor="white" ecl="H" />
             </View>
-            <Link href={'/(app)/scan'} style={{
+            {/* <Link href={'/(app)/scan'} style={{
                 backgroundColor: theme.colors.primary,
                 fontSize: 16,
                 marginTop: 8,
@@ -23,7 +29,7 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ upiId }) => {
                 paddingHorizontal: 16,
                 color: "white",
                 borderRadius: 8,
-            }}>Scan to pay</Link>
+            }}>Scan to pay</Link> */}
         </View>
     )
 }
