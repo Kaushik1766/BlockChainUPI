@@ -18,7 +18,7 @@ export default function AppLayout() {
         return <Redirect href="/Welcome" />;
     }
 
-    return <Tabs screenOptions={{ headerShown: false }}>
+    return <Tabs screenOptions={{ headerShown: false }} initialRouteName='home'>
         <Tabs.Screen
             name="wallet"
             options={{
@@ -27,10 +27,16 @@ export default function AppLayout() {
             }}
         />
         <Tabs.Screen
-            name="index"
+            name="home"
             options={{
                 title: 'Home',
                 tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />,
+            }}
+        />
+        <Tabs.Screen
+            name="index"
+            options={{
+                href: null
             }}
         />
         <Tabs.Screen
@@ -40,18 +46,24 @@ export default function AppLayout() {
                 tabBarIcon: ({ color }) => <AntDesign name="user" size={24} color={color} />,
             }}
         />
-        <Tabs.Screen
+        {/* <Tabs.Screen
             name="scan"
             options={{
                 href: null
             }}
-        />
-        <Tabs.Screen
+        /> */}
+        {/* <Tabs.Screen
             name='transactions'
             options={{
                 href: null,
                 headerShown: false
             }}
-        />
+        /> */}
+        {/* <Tabs.Screen
+            name='payUpi'
+            options={{
+                href: null,
+            }}
+        /> */}
     </Tabs>;
 }

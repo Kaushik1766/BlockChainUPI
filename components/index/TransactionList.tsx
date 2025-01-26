@@ -24,20 +24,17 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Recent Transactions</Text>
-            {/* <FlatList
+            <FlatList
                 data={transactions}
-                renderItem={renderTransaction}
-                keyExtractor={(item) => item.id}
-                ItemSeparatorComponent={() => <Divider />}
-            /> */}
-            {
-                transactions.map((item, idx) => <List.Item key={idx}
-                    title={item.recipient}
-                    description={item.date}
-                    right={() => <Text style={styles.amount}>₹{item.amount.toFixed(2)}</Text>}
-                />)
-            }
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <List.Item
+                        title={item.recipient}
+                        description={item.date}
+                        right={() => <Text style={styles.amount}>₹{item.amount.toFixed(2)}</Text>}
+                    />
+                )}
+            />
         </View>
     )
 }

@@ -45,7 +45,6 @@ export default function RootLayout() {
     <Auth0Provider domain={"dev-avbpamn8nlbn8lg3.us.auth0.com"} clientId={"AM64NAAD0FEMNNT34XgXHWuNhoTkEmse"}>
       <PaperProvider theme={darkTheme}>
         <ThemeProvider value={DarkTheme}>
-
           <Slot />
           <StatusBar style="auto" />
         </ThemeProvider>
