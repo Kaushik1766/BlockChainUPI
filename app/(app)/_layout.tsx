@@ -20,17 +20,17 @@ export default function AppLayout() {
 
     return <Tabs screenOptions={{ headerShown: false }}>
         <Tabs.Screen
-            name="index"
-            options={{
-                title: 'Home',
-                tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />,
-            }}
-        />
-        <Tabs.Screen
             name="wallet"
             options={{
                 title: 'Wallet',
                 tabBarIcon: ({ color }) => <Entypo name="wallet" size={24} color={color} />,
+            }}
+        />
+        <Tabs.Screen
+            name="index"
+            options={{
+                title: 'Home',
+                tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />,
             }}
         />
         <Tabs.Screen

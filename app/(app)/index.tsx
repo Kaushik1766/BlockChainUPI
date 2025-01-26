@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import UPIIdDisplay from "../../components/index/UPIIdDisplay"
 import QRCodeDisplay from "../../components/index/QRCodeDisplay"
 import { useAuth0 } from "react-native-auth0"
+import LottieView from "lottie-react-native"
 
 const HomePage: React.FC = () => {
     const { user } = useAuth0()
@@ -20,6 +21,14 @@ const HomePage: React.FC = () => {
             <View style={styles.scrollView}>
                 <View style={styles.container}>
                     <UPIIdDisplay upiId={upiId} />
+                    {/* <LottieView
+                        source={require("../../assets/animations/upiAnimation.json")}
+                        autoPlay
+                        loop
+                        style={{
+                            width: 200,
+                            height: 200,
+                        }} /> */}
                     {/* <QRCodeDisplay upiId={upiId} /> */}
                     {/* <ScanPayButton onPress={handleScanPay} /> */}
                 </View>
