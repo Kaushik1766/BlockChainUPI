@@ -46,5 +46,12 @@ export default function AppLayout() {
                 href: null
             }}
         />
+        <Tabs.Screen
+            name='transactions'
+            options={{
+                href: null,
+                headerShown: false
+            }}
+        />
     </Tabs>;
 }
