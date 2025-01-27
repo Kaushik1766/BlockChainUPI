@@ -32,7 +32,7 @@ export default function LinkButton({ link, title }: { link: string, title: strin
                 <Text
                     style={{
                         color: 'white',
-                        fontSize: theme.fonts.titleLarge.fontSize,
+                        fontSize: 20,
                         fontWeight: 'bold'
                     }}
                 >

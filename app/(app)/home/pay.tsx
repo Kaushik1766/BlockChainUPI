@@ -73,6 +73,7 @@ const PayPage: React.FC = () => {
                             keyboardType="numeric"
                             style={styles.input}
                             mode="outlined"
+                            textColor="white"
                         />
                         <Dropdown
                             placeholder="Select Chain"
@@ -82,7 +83,7 @@ const PayPage: React.FC = () => {
                             placeholderStyle={{ color: "#BDBDBD" }}
                             style={{
                                 width: '50%',
-                                padding: 14,
+                                padding: 10,
                                 backgroundColor: "#1E1E1E",
                                 borderRadius: 8,
                                 borderWidth: 1,
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
     },
     input: {
+        color: 'white',
         marginBottom: 16,
         backgroundColor: "#1E1E1E",
         width: '30%'

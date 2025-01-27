@@ -19,14 +19,15 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  const darkTheme = {
+  const darkTheme: typeof defaultTheme = {
     ...defaultTheme,
     colors: {
       ...defaultTheme.colors,
       primary: '#6200ee',
       background: '#121212',
       surface: '#121212',
-      text: '#ffffff',
+      onSurface: '#ffffff',
+      onSurfaceVariant: '#818181',
     },
   };
 
