@@ -44,6 +44,7 @@ const HomePage: React.FC = () => {
                     <LinkButton link="/(app)/home/transactions" title="Transactions" />
                     <LinkButton link="/(app)/home/scan" title="Scan and Pay" />
                     <LinkButton link="/(app)/home/payUpi" title="Pay with UPI ID" />
+                    <LinkButton link="/(app)/home/payNFC" title="Contactless Payment" />
                 </View>
             </View>
         </SafeAreaView>

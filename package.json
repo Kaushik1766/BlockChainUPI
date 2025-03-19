@@ -39,6 +39,7 @@
     "react-native-element-dropdown": "^2.12.4",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-modal": "^13.0.1",
+    "react-native-nfc-manager": "^3.16.1",
     "react-native-paper": "^5.13.1",
     "react-native-qrcode-svg": "^6.3.14",
     "react-native-reanimated": "~3.16.1",
