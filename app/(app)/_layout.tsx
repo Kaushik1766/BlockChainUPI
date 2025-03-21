@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 export default function AppLayout() {
-    const [loading, setLoading] = useState(true);
+    const [authenticated, setAuthenticated] = useState(false);
 
     const validateUser = async () => {
         try{
@@ -29,6 +29,7 @@ export default function AppLayout() {
 
 
             useUserStore.setState(bodyObject)
+            setAuthenticated(true)
         }
         else{
             router.replace("/Welcome");
@@ -41,7 +42,7 @@ export default function AppLayout() {
     }
 
 
-    useEffect(()=>{validateUser()}, [])
+    useEffect(()=>{validateUser()}, [authenticated])
 
 
     return <Tabs screenOptions={{ headerShown: false }} initialRouteName='home'>
