@@ -37,7 +37,13 @@ const WelcomePage = () => {
                 </View>
                 <Button
                     mode="contained"
-                    onPress={handleLogin}
+                    onPress={()=>{router.push("./Signup")}}
+                    style={styles.button}
+                    labelStyle={styles.buttonLabel}
+                >Signup</Button>
+                <Button
+                    mode="contained"
+                    onPress={()=>{router.push("./Login")}}
                     style={styles.button}
                     labelStyle={styles.buttonLabel}
                 >
