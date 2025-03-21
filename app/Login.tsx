@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useUserStore } from './UserContext';
+import { State } from 'react-native-gesture-handler';
+import { router } from 'expo-router';
+
 
 const darkTheme = {
     ...DefaultTheme,
@@ -41,10 +46,18 @@ const Login = () => {
                 "email": email,
                 "password": password,
             });
+            if (response.headers["set-cookie"]){
+                let end = response.headers["set-cookie"][0].indexOf(";")
+                let tokens = response.headers["set-cookie"][0].substring(6, end).split(".")
+                let bodyObject = JSON.parse(atob(tokens[1]))
+                useUserStore.setState(bodyObject)
+                await AsyncStorage.setItem('UPI-login-token', response.headers["set-cookie"][0].substring(6, end))
+            }
             console.log('Login successful:', response.data);
+            router.push('/')
         } catch (err: any) {
-            console.error('Login failed:', err.toJSON());
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
+            console.log('Login failed:', err.toJSON());
+            setError(err.response?.data?.message || 'Incorrect email or password');
         } finally {
             setLoading(false);
         }

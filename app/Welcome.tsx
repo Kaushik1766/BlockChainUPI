@@ -18,14 +18,14 @@ const darkTheme = {
 const WelcomePage = () => {
     const { authorize } = useAuth0();
 
-    async function handleLogin() {
-        try {
-            await authorize();
-            router.replace('/');
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    // async function handleLogin() {
+    //     try {
+    //         await authorize();
+    //         router.replace('/');
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
 
     return (
         <PaperProvider theme={darkTheme}>
