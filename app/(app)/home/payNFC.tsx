@@ -8,9 +8,7 @@ import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 
 
 const VerifyUPIPage: React.FC = () => {
-    const [upiId, setUpiId] = useState<string>("")
     const [error, setError] = useState("")
-    const [readTag, setReadTag] = useState<string[]>();
     const [isSupported, setIsSupported] = useState<boolean | null>(null);
     const [isNfcEnabled, setIsNfcEnabled] = useState<boolean | null>(null);
     const [refresh, setRefresh] = useState<number | null>(1)
@@ -22,7 +20,7 @@ const VerifyUPIPage: React.FC = () => {
         try {
             const supported = await NfcManager.isSupported();
             setIsSupported(supported);
-            
+           
             if (supported) {
                 const enabled = await NfcManager.isEnabled();
                 setIsNfcEnabled(enabled);
@@ -40,7 +38,9 @@ const VerifyUPIPage: React.FC = () => {
           setRefresh(0);
         }
       }, [refresh]);
-    
+
+
+      
 
     const validateUpiId = (id: string) => {
         // const upiRegex = /^[\w.-]+@[\w.-]+$/
@@ -48,16 +48,14 @@ const VerifyUPIPage: React.FC = () => {
         return true
     }
 
-    const handleVerify = () => {
+    const handleVerify = (upiId:string) => {
         if (!validateUpiId(upiId)) {
             setError("Invalid UPI ID format")
             return
         }
         
         setError("")
-        // upi veification
         console.log("Verifying UPI ID:", upiId)
-        // alert(`Verification process initiated for ${upiId}`)
         router.push({
             pathname: "/(app)/home/pay",
             params: {
@@ -72,20 +70,14 @@ const VerifyUPIPage: React.FC = () => {
           await NfcManager.requestTechnology(NfcTech.Ndef);
           
           const tag = await NfcManager.getTag();
-    
+        let payloads = [""]
           if (tag?.ndefMessage) {
             
-            const payloads = tag.ndefMessage.map((content) => (content.payload)).map(el=>el.map((el)=>(String.fromCharCode(el))).join('').substring(3));
-            setReadTag(payloads);
+            payloads = tag.ndefMessage.map((content) => (content.payload)).map(el=>el.map((el)=>(String.fromCharCode(el))).join('').substring(3));
           }
-        // console.log(readTag)
-          if (!!readTag){
-            // console.log("yes")
-            // console.log(readTag[0])
-            setUpiId(readTag[0])
-            // console.log(upiId)
-          }
-          handleVerify()
+          if (!!payloads[0]){
+            handleVerify(payloads[0])
+        }
         } catch (ex) {
           console.log('NFC Read Error:', ex);
         } finally {
@@ -93,9 +85,10 @@ const VerifyUPIPage: React.FC = () => {
           setScanning(0)
         }
       }
+    
 
 
-    if (isSupported === null || isNfcEnabled === null) {
+    if (isSupported === null && isNfcEnabled === null) {
         return (
             <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
