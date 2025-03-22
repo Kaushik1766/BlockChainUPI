@@ -5,17 +5,21 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
 import { useAuth0 } from "react-native-auth0"
 import { router } from "expo-router"
+import { useUserStore } from "@/app/UserContext"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 
 
 const ProfilePage: React.FC = () => {
     // const navigation = useNavigation()
-    const { clearSession } = useAuth0()
-    const { user } = useAuth0()
+    const user = useUserStore((state)=>(state))
 
     async function handleLogout() {
         try {
-            await clearSession()
+            useUserStore.setState(undefined)
+            await AsyncStorage.removeItem('UPI-login-token')
+            let res = await AsyncStorage.getItem('UPI-login-token')
+            console.log(res + "logout")
             router.navigate("/Welcome")
         }
         catch (error) {
@@ -30,9 +34,9 @@ const ProfilePage: React.FC = () => {
                     <Text style={styles.title}>Profile</Text>
 
                     <List.Section>
-                        <List.Item titleStyle={{ color: 'white' }} title="Name" description={user?.name} left={(props) => <List.Icon {...props} icon="account" color="white" />} />
-                        <List.Item titleStyle={{ color: 'white' }} title="UPI ID" description={`${user?.email}`} left={(props) => <List.Icon {...props} icon="qrcode" color="white" />} />
-                        <List.Item titleStyle={{ color: 'white' }} title="Email" description={user?.email} left={(props) => <List.Icon {...props} icon="email" color="white" />} />
+                        <List.Item titleStyle={{ color: 'white' }} title="Name" description={user?.Name} left={(props) => <List.Icon {...props} icon="account" color="white" />} />
+                        <List.Item titleStyle={{ color: 'white' }} title="UPI ID" description={`${user?.Email}`} left={(props) => <List.Icon {...props} icon="qrcode" color="white" />} />
+                        <List.Item titleStyle={{ color: 'white' }} title="Email" description={user?.Email} left={(props) => <List.Icon {...props} icon="email" color="white" />} />
                         <TouchableRipple onPress={() => router.push('/(app)/profile/preferences')}>
                             <List.Item
                                 titleStyle={{ color: "white" }}

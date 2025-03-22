@@ -45,11 +45,17 @@ const Login = () => {
             const response = await axios.post('https://dev-chain-upi.azurewebsites.net/api/auth/login', {
                 "email": email,
                 "password": password,
+            }, {
+                headers:{
+                    "set-cookie":""
+                }
             });
             if (response.headers["set-cookie"]){
                 let end = response.headers["set-cookie"][0].indexOf(";")
                 let tokens = response.headers["set-cookie"][0].substring(6, end).split(".")
                 let bodyObject = JSON.parse(atob(tokens[1]))
+                console.log(tokens[1] + "login")
+                console.log(bodyObject + "login")
                 useUserStore.setState(bodyObject)
                 await AsyncStorage.setItem('UPI-login-token', response.headers["set-cookie"][0].substring(6, end))
             }

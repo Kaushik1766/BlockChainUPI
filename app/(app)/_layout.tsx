@@ -27,7 +27,7 @@ export default function AppLayout() {
                 headers:{"Authorization":"Bearer "+token}
             })
 
-
+            console.log(bodyObject)
             useUserStore.setState(bodyObject)
             setAuthenticated(true)
         }

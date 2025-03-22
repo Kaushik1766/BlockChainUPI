@@ -5,13 +5,14 @@ import { useAuth0 } from "react-native-auth0";
 import { Text, useTheme } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import LinkButton from "@/components/index/LinkButton";
+import { useUserStore } from "../UserContext";
 
 const WalletsPage: React.FC = () => {
-    const { user } = useAuth0();
+    const user = useUserStore((state)=>(state))
     const theme = useTheme();
 
     const primaryWallet = {
-        address: `${user?.email?.substring(0, user.email.indexOf('@'))}@chainupi`,
+        address: `${user?.Email?.substring(0, user.Email.indexOf('@'))}@chainupi`,
         balance: "1000 ETH",
         chain: "Ethereum",
     };

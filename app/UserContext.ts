@@ -7,6 +7,4 @@ interface User{
     "UpiHandle": String
 }
 
-let usera : User = {Email:"abcd@gmail.com", Name:"abcd", UpiHandle:"Abcd"}
-
 export const useUserStore = create<User | undefined>(()=>undefined)

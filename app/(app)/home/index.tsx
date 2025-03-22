@@ -10,10 +10,11 @@ import { Text, useTheme } from "react-native-paper"
 import { Button } from "react-native-paper"
 import { AntDesign } from "@expo/vector-icons"
 import LinkButton from "@/components/index/LinkButton"
+import { useUserStore } from "@/app/UserContext"
 
 const HomePage: React.FC = () => {
-    const { user } = useAuth0()
-    const upiId = `${user?.email?.substring(0, user.email.indexOf('@'))}@chainupi`
+    const user = useUserStore((state)=>(state))
+    const upiId = `${user?.Email?.substring(0, user.Email.indexOf('@'))}@chainupi`
     const theme = useTheme()
 
     const handleScanPay = () => {
