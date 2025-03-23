@@ -35,7 +35,7 @@ const ProfilePage: React.FC = () => {
 
                     <List.Section>
                         <List.Item titleStyle={{ color: 'white' }} title="Name" description={user?.Name} left={(props) => <List.Icon {...props} icon="account" color="white" />} />
-                        <List.Item titleStyle={{ color: 'white' }} title="UPI ID" description={`${user?.Email}`} left={(props) => <List.Icon {...props} icon="qrcode" color="white" />} />
+                        <List.Item titleStyle={{ color: 'white' }} title="UPI ID" description={`${user?.Email?.substring(0, user.Email.indexOf('@'))}@chainupi`} left={(props) => <List.Icon {...props} icon="qrcode" color="white" />} />
                         <List.Item titleStyle={{ color: 'white' }} title="Email" description={user?.Email} left={(props) => <List.Icon {...props} icon="email" color="white" />} />
                         <TouchableRipple onPress={() => router.push('/(app)/profile/preferences')}>
                             <List.Item

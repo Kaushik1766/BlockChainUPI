@@ -4,6 +4,7 @@ import { create } from "zustand";
 interface User{
     "Email":String,
     "Name": String,
+    "UID":String,
     "UpiHandle": String
 }
 

@@ -13,27 +13,23 @@ export default function AppLayout() {
 
     const validateUser = async () => {
         try{
-        let token = await AsyncStorage.getItem('UPI-login-token')
+            let token = await AsyncStorage.getItem('UPI-login-token')
 
-        if (token){
-            let tokenBody = token.split(".")
-            console.log(tokenBody[1])
-            let bodyObject = JSON.parse(atob(tokenBody[1]))
+            if (token){
+                let tokenBody = token.split(".")
+                let bodyObject = JSON.parse(atob(tokenBody[1]))
 
-            //a different checker function needs to be implemented
-            let response = await axios.post("https://dev-chain-upi.azurewebsites.net/api/profile/changePassword", {
-                "password":"Abcd@12345"
-            },{
-                headers:{"Authorization":"Bearer "+token}
-            })
+                let response = await axios.get("https://dev-chain-upi.azurewebsites.net/api/auth/check",{
+                    headers:{"Authorization":"Bearer "+token}
+                })
 
-            console.log(bodyObject)
-            useUserStore.setState(bodyObject)
-            setAuthenticated(true)
-        }
-        else{
-            router.replace("/Welcome");
-        }
+                console.log(bodyObject)
+                useUserStore.setState(bodyObject)
+                setAuthenticated(true)
+            }
+            else{
+                router.replace("/Welcome");
+            }
         }
         catch(err){
             console.log(err)
@@ -47,9 +43,9 @@ export default function AppLayout() {
 
     return <Tabs screenOptions={{ headerShown: false }} initialRouteName='home'>
         <Tabs.Screen
-            name="wallet"
+            name="walletsPage"
             options={{
-                title: 'Wallet',
+                title: 'Wallets',
                 tabBarIcon: ({ color }) => <Entypo name="wallet" size={24} color={color} />,
             }}
         />
