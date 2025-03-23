@@ -1,22 +1,25 @@
 import type React from "react";
-import { View, StyleSheet, ScrollView} from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, useTheme } from "react-native-paper";
 import { useUserStore } from "../UserContext";
 import { useEffect, useState } from "react";
 import fetchWallets, { Wallet } from "@/functions/walletFunctions";
 import WalletDisplay from "@/components/index/WalletDisplay";
+import AddWallet from "@/components/index/AddWalet";
+import { AntDesign } from "@expo/vector-icons";
 
 
 
 const WalletsPage: React.FC = () => {
-    const user = useUserStore((state)=>(state))
     const theme = useTheme();
+    const user = useUserStore((state)=>(state))
     const [chainWallets, setChainWallets] = useState<Record<string, Wallet[]>>();
+    const [addWalletVisible, setAddWalletVisible] = useState(false)
+    const [defaultChain, setDefaultChain] = useState("eth")
 
     
     useEffect(()=>{fetchWallets(setChainWallets)}, [])
-    useEffect(()=>{console.log(chainWallets)}, [chainWallets])
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -32,10 +35,19 @@ const WalletsPage: React.FC = () => {
                     {/* Supported Chains Section */}
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Supported Chains</Text>
-                        {chainWallets && Object.keys(chainWallets).map((el) => <WalletDisplay chain={el} wallets={chainWallets[el]}></WalletDisplay>)}
+                        {chainWallets && Object.keys(chainWallets).map((el) => 
+                            <WalletDisplay 
+                            chain={el} 
+                            wallets={chainWallets[el]}/>)}
                     </View>
+
+                    <TouchableOpacity style={styles.addWalletButton} onPress={()=>{setAddWalletVisible(true);}}>
+                        <AntDesign name="pluscircleo" size={20} color={theme.colors.primary} />
+                        <Text style={styles.addWalletText}>Add Wallet</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
+            <AddWallet visible={addWalletVisible} setVisible={setAddWalletVisible}></AddWallet>
         </SafeAreaView>
     );
 };
@@ -53,7 +65,7 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     section: {
-        marginBottom: 24,
+        marginBottom: 0,
     },
     sectionTitle: {
         fontSize: 18,

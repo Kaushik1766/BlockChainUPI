@@ -7,7 +7,7 @@ import { Wallet } from "@/functions/walletFunctions";
 
 interface Props{
     "chain":string,
-    "wallets":Wallet[]
+    "wallets":Wallet[],
 }
 
 const WalletDisplay = ({chain, wallets}:Props) => {
@@ -26,10 +26,6 @@ const WalletDisplay = ({chain, wallets}:Props) => {
                     <Text style={styles.walletBalance}>{wallet.balance + " " + chainDetails[chain][1]}</Text>
                 </View>
             ))}
-            <TouchableOpacity style={styles.addWalletButton}>
-                <AntDesign name="pluscircleo" size={20} color={theme.colors.primary} />
-                <Text style={styles.addWalletText}>Add Wallet</Text>
-            </TouchableOpacity>
         </View>
     )
 }
