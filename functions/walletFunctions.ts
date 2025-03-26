@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { useState } from "react"
 
 interface Wallet{
@@ -10,6 +10,26 @@ interface Wallet{
 }
 
 export {Wallet}
+
+const addWallet = async (address:string, privateKey: string, chain: string, setError: React.Dispatch<React.SetStateAction<string>>) => {
+    try{
+        let token = await AsyncStorage.getItem('UPI-login-token')
+        let response = await axios.post("https://dev-chain-upi.azurewebsites.net/api/wallet/addWallet",
+            {
+                "address":address,
+                "privatekey":privateKey,
+                "chain":chain
+            },
+            {
+            headers:{"Authorization":"Bearer "+token}
+        })
+    }
+    catch (err : any){
+        console.log(err.response.data.error);
+    }
+}
+
+export {addWallet}
 
 const fetchWallets = async (setChainWallets: React.Dispatch<React.SetStateAction<Record<string, Wallet[]> | undefined>>) => {
         const possibleChains = ["eth", "trx"]

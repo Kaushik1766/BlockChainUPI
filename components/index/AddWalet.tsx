@@ -1,8 +1,9 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, Keyboard } from "react-native";
 import Modal from "react-native-modal";
 import { Text, useTheme, Button } from "react-native-paper";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
+import { addWallet } from "@/functions/walletFunctions";
 
 interface Props {
     visible: boolean;
@@ -12,30 +13,32 @@ interface Props {
 const AddWallet = ({ visible, setVisible}: Props) => {
     const theme = useTheme();
     
-    const [accountNumber, setAccountNumber] = useState("");
+    const [accountAddress, setAccountAddress] = useState("");
     const [privateKey, setPrivateKey] = useState("");
     const [selectedChain, setSelectedChain] = useState("eth");
+    const [error, setError] = useState("")
+
 
     const revertAddWallet = () => {
         setVisible(false);
-        setAccountNumber("");
+        setAccountAddress("");
         setPrivateKey("")
     };
 
     const saveWallet = () => {
-        console.log("Account Number:", accountNumber);
+        console.log("Account Number:", accountAddress);
         console.log("Private Key:", privateKey);
         console.log("Selected Chain:", selectedChain);
+        addWallet(accountAddress, privateKey, selectedChain, setError)
         revertAddWallet();
     };
 
     return (
         <Modal
             isVisible={visible}
-            style={styles.modal}
+            style={[styles.modal]}
             onBackButtonPress={revertAddWallet}
             onBackdropPress={revertAddWallet}
-            avoidKeyboard={true}
         >
             <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
                 <Text style={styles.title}>Add Wallet</Text>
@@ -51,10 +54,10 @@ const AddWallet = ({ visible, setVisible}: Props) => {
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter Account Number"
+                    placeholder="Enter Account address"
                     placeholderTextColor="#999"
-                    value={accountNumber}
-                    onChangeText={setAccountNumber}
+                    value={accountAddress}
+                    onChangeText={setAccountAddress}
                 />
 
                 <TextInput
@@ -65,7 +68,7 @@ const AddWallet = ({ visible, setVisible}: Props) => {
                     onChangeText={setPrivateKey}
                     secureTextEntry
                 />
-
+                {error ? <Text style={styles.errorText}>{error}</Text> : null}
                 <Button mode="contained" onPress={saveWallet} style={styles.saveButton}>
                     Save Wallet
                 </Button>
@@ -80,9 +83,8 @@ const styles = StyleSheet.create({
         margin: 0,
     },
     container: {
-        height: "50%",
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        height: 350,
+        borderRadius: 5,
         padding: 20,
         alignItems: "center",
         justifyContent: "center",
@@ -112,6 +114,11 @@ const styles = StyleSheet.create({
     saveButton: {
         width: "100%",
         marginTop: 10,
+    },
+    errorText: {
+        color: 'red',
+        textAlign: 'center',
+        marginBottom: 10,
     },
 });
 
