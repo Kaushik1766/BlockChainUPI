@@ -8,12 +8,12 @@ import { addWallet } from "@/functions/walletFunctions";
 interface Props {
     visible: boolean;
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddWallet = ({ visible, setVisible}: Props) => {
+const AddWallet = ({ visible, setVisible, setUpdate}: Props) => {
     const theme = useTheme();
     
-    const [accountAddress, setAccountAddress] = useState("");
     const [privateKey, setPrivateKey] = useState("");
     const [selectedChain, setSelectedChain] = useState("eth");
     const [error, setError] = useState("")
@@ -21,16 +21,19 @@ const AddWallet = ({ visible, setVisible}: Props) => {
 
     const revertAddWallet = () => {
         setVisible(false);
-        setAccountAddress("");
         setPrivateKey("")
+        setSelectedChain("eth")
     };
 
-    const saveWallet = () => {
-        console.log("Account Number:", accountAddress);
+    const saveWallet = async () => {
         console.log("Private Key:", privateKey);
         console.log("Selected Chain:", selectedChain);
-        addWallet(accountAddress, privateKey, selectedChain, setError)
-        revertAddWallet();
+        let result = await addWallet( privateKey, selectedChain, setError)
+        if (result){
+            revertAddWallet();
+            setUpdate(true)
+        }
+
     };
 
     return (
@@ -54,19 +57,10 @@ const AddWallet = ({ visible, setVisible}: Props) => {
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter Account address"
-                    placeholderTextColor="#999"
-                    value={accountAddress}
-                    onChangeText={setAccountAddress}
-                />
-
-                <TextInput
-                    style={styles.input}
                     placeholder="Enter Private Key"
                     placeholderTextColor="#999"
                     value={privateKey}
                     onChangeText={setPrivateKey}
-                    secureTextEntry
                 />
                 {error ? <Text style={styles.errorText}>{error}</Text> : null}
                 <Button mode="contained" onPress={saveWallet} style={styles.saveButton}>

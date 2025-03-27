@@ -16,10 +16,18 @@ const WalletsPage: React.FC = () => {
     const user = useUserStore((state)=>(state))
     const [chainWallets, setChainWallets] = useState<Record<string, Wallet[]>>();
     const [addWalletVisible, setAddWalletVisible] = useState(false)
-    const [defaultChain, setDefaultChain] = useState("eth")
+    const [update, setUpdate] = useState(true)
 
     
-    useEffect(()=>{fetchWallets(setChainWallets)}, [])
+    useEffect(()=>{
+        fetchWallets(setChainWallets)
+        setUpdate(false)
+    }, [update])
+
+    
+    
+
+    //add ActivityIndicator
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -47,7 +55,7 @@ const WalletsPage: React.FC = () => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <AddWallet visible={addWalletVisible} setVisible={setAddWalletVisible}></AddWallet>
+            <AddWallet visible={addWalletVisible} setVisible={setAddWalletVisible} setUpdate={setUpdate}></AddWallet>
         </SafeAreaView>
     );
 };
@@ -123,7 +131,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         color: "#FFFFFF",
-        marginBottom: 15,
         textAlign: "center",
         marginTop: 15
     }

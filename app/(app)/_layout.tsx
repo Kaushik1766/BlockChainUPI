@@ -23,7 +23,6 @@ export default function AppLayout() {
                     headers:{"Authorization":"Bearer "+token}
                 })
 
-                console.log(bodyObject)
                 useUserStore.setState(bodyObject)
                 setAuthenticated(true)
             }
@@ -69,24 +68,5 @@ export default function AppLayout() {
                 tabBarIcon: ({ color }) => <AntDesign name="user" size={24} color={color} />,
             }}
         />
-        {/* <Tabs.Screen
-            name="scan"
-            options={{
-                href: null
-            }}
-        /> */}
-        {/* <Tabs.Screen
-            name='transactions'
-            options={{
-                href: null,
-                headerShown: false
-            }}
-        /> */}
-        {/* <Tabs.Screen
-            name='payUpi'
-            options={{
-                href: null,
-            }}
-        /> */}
     </Tabs>;
 }

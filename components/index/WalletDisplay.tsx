@@ -21,9 +21,9 @@ const WalletDisplay = ({chain, wallets}:Props) => {
         <View style={styles.chainCard} key={chain}>
             <Text style={styles.chainName}>{chainDetails[chain][0]}</Text>
             {wallets.map((wallet, walletIndex) => (
-                <View key={walletIndex} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 }]}>
+                <View key={walletIndex} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 , position:"relative"}]}>
+                    {walletIndex === 0 && <Text style={styles.primaryText} >Primary</Text>}
                     <Text style={styles.walletAddress}>{wallet.address}</Text>
-                    <Text style={styles.walletBalance}>{wallet.balance + " " + chainDetails[chain][1]}</Text>
                 </View>
             ))}
         </View>
@@ -31,8 +31,6 @@ const WalletDisplay = ({chain, wallets}:Props) => {
 }
 
 const styles = StyleSheet.create({
-
-
     chainCard: {
         backgroundColor: "#1E1E1E",
         borderRadius: 8,
@@ -74,6 +72,18 @@ const styles = StyleSheet.create({
         color: "#6200ee",
         marginLeft: 8,
     },
-
+    primaryText:{
+        fontSize: 12,
+        color: "#6200ee",
+        position:"absolute",
+        top:-15,
+        right:10,
+        backgroundColor: "#A0A0A0",
+        borderColor:"#6200ee",
+        borderWidth:2,
+        borderRadius:10,
+        padding:5,
+        fontWeight:"bold"
+    }
 });
 export default WalletDisplay
