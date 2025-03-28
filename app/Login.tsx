@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useUserStore } from './UserContext';
-import { State } from 'react-native-gesture-handler';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { decode as base64Decode } from 'base-64';
 
-
-const darkTheme = {
+const theme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#6200ee',
-        background: '#121212',
-        surface: '#121212',
-        text: '#ffffff',
+        primary: '#6A11CB',  
+        background: '#F5F5F5',
+        text: '#333',
+        placeholder: '#999',
     },
 };
 
@@ -24,45 +24,40 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleLogin = async () => {
-        if (!email && !password) {
+        if (!email || !password) {
             setError('Please enter both email and password.');
             return;
         }
-        else if (!email) {
-            setError('Please enter email');
-            return;
-        }
-        if (!password) {
-            setError('Please enter password.');
-            return;
-        }
+
         setError('');
         setLoading(true);
-        
+
         try {
-            const response = await axios.post('https://dev-chain-upi.azurewebsites.net/api/auth/login', {
-                "email": email,
-                "password": password,
-            }, {
-                headers:{
-                    "set-cookie":""
-                }
-            });
-            if (response.headers["set-cookie"]){
-                let end = response.headers["set-cookie"][0].indexOf(";")
-                let tokens = response.headers["set-cookie"][0].substring(6, end).split(".")
-                let bodyObject = JSON.parse(atob(tokens[1]))
-                console.log(tokens[1] + "login")
-                console.log(bodyObject + "login")
-                useUserStore.setState(bodyObject)
-                await AsyncStorage.setItem('UPI-login-token', response.headers["set-cookie"][0].substring(6, end))
+            const response = await axios.post(
+                'https://dev-chain-upi.azurewebsites.net/api/auth/login',
+                { email, password }
+            );
+
+            const cookieHeader = response.headers['set-cookie'];
+            if (cookieHeader) {
+                const tokenString = cookieHeader[0];
+                const tokenStart = tokenString.indexOf('=') + 1;
+                const tokenEnd = tokenString.indexOf(';');
+                const jwtToken = tokenString.substring(tokenStart, tokenEnd);
+
+                const tokens = jwtToken.split('.');
+                const bodyObject = JSON.parse(base64Decode(tokens[1]));
+
+                useUserStore.setState(() => ({ ...bodyObject }));
+
+                await AsyncStorage.setItem('UPI-login-token', jwtToken);
             }
-            console.log('Login successful:', response.data);
-            router.push('/')
+
+            router.push('/');
         } catch (err: any) {
-            console.log('Login failed:', err.toJSON());
             setError(err.response?.data?.message || 'Incorrect email or password');
         } finally {
             setLoading(false);
@@ -70,9 +65,18 @@ const Login = () => {
     };
 
     return (
-        <PaperProvider theme={darkTheme}>
+        <PaperProvider theme={theme}>
             <View style={styles.container}>
-                <Text style={styles.title}>Login</Text>
+
+                {/* Logo at the top */}
+                <Image 
+                    source={require('../assets/images/Logo.webp')} 
+                    style={styles.logo} 
+                    resizeMode="contain"
+                />
+
+                <Text style={styles.title}>Welcome Back</Text>
+
                 <TextInput
                     label="Email"
                     value={email}
@@ -80,7 +84,6 @@ const Login = () => {
                     keyboardType="email-address"
                     autoCapitalize="none"
                     style={styles.input}
-                    textColor='#ffffff'
                 />
                 <TextInput
                     label="Password"
@@ -88,12 +91,27 @@ const Login = () => {
                     onChangeText={setPassword}
                     secureTextEntry
                     style={styles.input}
-                    textColor='#ffffff'
                 />
+
                 {error ? <Text style={styles.errorText}>{error}</Text> : null}
-                <Button mode="contained" onPress={handleLogin} loading={loading} disabled={loading} style={styles.button}>
-                    Login
-                </Button>
+
+                {/* Gradient Button */}
+                <LinearGradient 
+                    colors={['#8E2DE2', '#4A00E0']}  
+                    style={styles.buttonGradient}
+                >
+                    <Button
+                        mode="contained"
+                        onPress={handleLogin}
+                        loading={loading}
+                        disabled={loading}
+                        labelStyle={styles.buttonText}
+                        style={styles.button}
+                    >
+                        Sign In
+                    </Button>
+                </LinearGradient>
+
             </View>
         </PaperProvider>
     );
@@ -103,22 +121,54 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
         padding: 20,
-        backgroundColor: '#121212',
+        backgroundColor: '#F5F5F5',
+    },
+    logo: {
+        width: 100,  
+        height: 100,  
+        borderRadius: 20,  
+        marginBottom: 20,  
+        borderWidth: 3,  
+        borderColor: '#6A11CB',
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 5 },
     },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: '#333',
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 24,
     },
     input: {
-        marginBottom: 16,
-        backgroundColor: '#1E1E1E',
+        width: '100%',
+        marginBottom: 12,
+        backgroundColor: '#FFF',
+        borderRadius: 8,
+    },
+    buttonGradient: {
+        width: '100%',
+        borderRadius: 12,
+        marginTop: 10,
+        shadowColor: '#4A00E0',
+        shadowOpacity: 0.4,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 5 },
     },
     button: {
-        marginTop: 16,
+        width: '100%',
+        paddingVertical: 12,
+        borderRadius: 12,
+        backgroundColor: 'transparent',  
+    },
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'white',
     },
     errorText: {
         color: 'red',
