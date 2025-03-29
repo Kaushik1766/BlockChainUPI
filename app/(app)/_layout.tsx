@@ -1,6 +1,5 @@
 import { Text } from 'react-native';
 import { Redirect, router, Stack, Tabs } from 'expo-router';
-import { useAuth0 } from 'react-native-auth0';
 import { useEffect, useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';

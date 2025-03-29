@@ -3,16 +3,18 @@ import { View, StyleSheet, ScrollView } from "react-native"
 import { Text, Button, Divider, List, TouchableRipple } from "react-native-paper"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
-import { useAuth0 } from "react-native-auth0"
 import { router } from "expo-router"
 import { useUserStore } from "@/app/UserContext"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useState } from "react"
+import VerifyPassword from "@/components/index/VerifyPassword"
 
 
 
 const ProfilePage: React.FC = () => {
     // const navigation = useNavigation()
     const user = useUserStore((state)=>(state))
+    const [verifyPasswordVisibile, setVerifyPasswordVisible] = useState<boolean>(false);
 
     async function handleLogout() {
         try {
@@ -53,7 +55,16 @@ const ProfilePage: React.FC = () => {
                                 right={(props) => <List.Icon {...props} icon="chevron-right" color="white" />}
                             />
                         </TouchableRipple>
+                        <TouchableRipple onPress={() => setVerifyPasswordVisible(true)}>
+                            <List.Item
+                                titleStyle={{ color: "red" }}
+                                title="Change Password"
+                                
+                                right={(props) => <List.Icon {...props} icon="chevron-right" color="white" />}
+                            />
+                        </TouchableRipple>
                     </List.Section>
+                    <VerifyPassword visible={verifyPasswordVisibile} setVisible={setVerifyPasswordVisible}></VerifyPassword>
                 </ScrollView>
 
                 <Button

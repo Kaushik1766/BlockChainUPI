@@ -16,12 +16,12 @@ const WalletDisplay = ({chain, wallets}:Props) => {
         "eth":["Ethereum", "eth"],
         "trx":["Tron", "trx"]
     }
-
+    
     return (
         <View style={styles.chainCard} key={chain}>
             <Text style={styles.chainName}>{chainDetails[chain][0]}</Text>
             {wallets.map((wallet, walletIndex) => (
-                <View key={walletIndex} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 , position:"relative"}]}>
+                <View key={wallet.address} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 , position:"relative"}]}>
                     {walletIndex === 0 && <Text style={styles.primaryText} >Primary</Text>}
                     <Text style={styles.walletAddress}>{wallet.address}</Text>
                 </View>

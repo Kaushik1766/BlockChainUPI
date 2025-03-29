@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
-import { useAuth0 } from 'react-native-auth0';
 import { router } from 'expo-router';
 
 const darkTheme = {
@@ -16,7 +15,6 @@ const darkTheme = {
 };
 
 const WelcomePage = () => {
-    const { authorize } = useAuth0();
 
     // async function handleLogin() {
     //     try {
