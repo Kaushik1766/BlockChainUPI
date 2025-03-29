@@ -1,9 +1,10 @@
 import { getEthWalletBalance, getTrxWalletBalance, Wallet } from "@/functions/walletFunctions"
 import { View , StyleSheet, TouchableOpacity} from "react-native"
-import { Text, useTheme} from "react-native-paper";
+import { Text, TouchableRipple } from "react-native-paper";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import { useEffect, useState } from "react";
-
+import { router } from "expo-router";
 
 interface Props{
     wallet: Wallet,
@@ -13,7 +14,6 @@ interface Props{
 const IndividualWallet = ({wallet, walletIndex}: Props)=>{
     const [balanceVisible, setBalanceVisible] = useState(false)
     const [balance, setBalance] = useState<number>(-1)
-
 
     const toggleVisibility = async ()=>{
         if (!balanceVisible){
@@ -28,6 +28,16 @@ const IndividualWallet = ({wallet, walletIndex}: Props)=>{
         }
     }
 
+    const showTransaction = ()=>{
+        router.push({
+            pathname: "/walletsPage/transactions",
+            params: {
+                address: wallet.address,
+                chain: wallet.chain
+            }
+        })
+    }
+
     useEffect(()=>{
         if (balance > -1){
             setBalanceVisible(true)
@@ -35,22 +45,27 @@ const IndividualWallet = ({wallet, walletIndex}: Props)=>{
     }, [balance])
 
     return (
-        <View key={wallet.address} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 , position:"relative"}]}>
-            {walletIndex === 0 && <Text style={styles.primaryText} >Primary</Text>}
+        <View key={wallet.address} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 , position:"relative"}]}> 
+            {walletIndex === 0 && <Text style={styles.primaryText}>Primary</Text>}
             <Text style={styles.walletAddress}>{wallet.address}</Text>
-            <TouchableOpacity style={styles.balanceContainer} onPress={() => toggleVisibility()}>
-                <Feather name={(balanceVisible) ? "eye" : "eye-off"} size={16} color="white" />
-                {balanceVisible?
-                <Text> {balance + " " + wallet.chain}</Text>
-                :<Text> Get Balance </Text>}
-            </TouchableOpacity>
-            
+            <View style={styles.iconContainer}>
+                <TouchableOpacity style={styles.balanceContainer} onPress={() => toggleVisibility()}>
+                    <Feather name={(balanceVisible) ? "eye" : "eye-off"} size={16} color="white" />
+                    {balanceVisible ?
+                    <Text> {balance + " " + wallet.chain}</Text>
+                    :<Text> Get Balance </Text>}
+                </TouchableOpacity>
+                <TouchableRipple onPress={()=>{
+                    showTransaction()
+                }}>
+                    <AntDesign name="profile" size={24} color="white" />
+                </TouchableRipple>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-
     walletCard: {
         backgroundColor: "#2C2C2C",
         borderRadius: 8,
@@ -60,31 +75,30 @@ const styles = StyleSheet.create({
     walletAddress: {
         fontSize: 14,
         color: "#FFFFFF",
+        marginBottom: 8,
     },
-    walletBalance: {
-        fontSize: 14,
-        color: "#A0A0A0",
-    },
-    primaryText:{
+    primaryText: {
         fontSize: 12,
         color: "#6200ee",
-        position:"absolute",
-        top:-15,
-        right:10,
+        position: "absolute",
+        top: -15,
+        right: 10,
         backgroundColor: "#A0A0A0",
-        borderColor:"#6200ee",
-        borderWidth:2,
-        borderRadius:10,
-        padding:5,
-        fontWeight:"bold"
-    },
-    eyeIcon: {
-        marginLeft: 4,
+        borderColor: "#6200ee",
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 5,
+        fontWeight: "bold"
     },
     balanceContainer: {
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 4,
+    },
+    iconContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
 });
-export default IndividualWallet
+
+export default IndividualWallet;

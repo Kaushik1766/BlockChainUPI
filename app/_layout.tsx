@@ -22,11 +22,11 @@ export default function RootLayout() {
     ...defaultTheme,
     colors: {
       ...defaultTheme.colors,
-      primary: '#6200ee',
-      background: '#121212',
-      surface: '#121212',
-      onSurface: '#ffffff',
-      onSurfaceVariant: '#818181',
+      primary: '#FCD34B',
+      background: '#FCD34B',
+      surface: '#FCD34B',
+      onSurface: '#FCD34B',
+      onSurfaceVariant: '#FCD34B',
     },
   };
 

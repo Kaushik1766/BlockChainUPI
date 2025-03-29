@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View ,Image} from 'react-native';
 import { Text, Button, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import { useAuth0 } from 'react-native-auth0';
 import { router } from 'expo-router';
 
 const darkTheme = {
@@ -15,7 +16,6 @@ const darkTheme = {
 };
 
 const WelcomePage = () => {
-
     // async function handleLogin() {
     //     try {
     //         await authorize();
@@ -29,9 +29,10 @@ const WelcomePage = () => {
         <PaperProvider theme={darkTheme}>
             <View style={styles.container}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>Welcome to</Text>
-                    <Text style={styles.appName}>Chain UPI</Text>
-                    <Text style={styles.subtitle}>Secure. Fast. Decentralized.</Text>
+                <Image  source={require("../assets/images/logo_transparent1.png")}  style={{ width: 400, height: 200 }} />
+                    {/* <Text style={styles.title}>Welcome to</Text> */}
+                    {/* <Text style={styles.appName}>Chain UPI</Text>
+                    <Text style={styles.subtitle}>Secure. Fast. Decentralized.</Text> */}
                 </View>
                 <Button
                     mode="contained"
@@ -68,18 +69,18 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: '#FCD34B',
         marginBottom: 10,
     },
     appName: {
         fontSize: 48,
         fontWeight: 'bold',
-        color: '#6200ee', // Primary color
+        color: '#FCD34B', // Primary color
         marginBottom: 20,
     },
     subtitle: {
         fontSize: 18,
-        color: '#ffffff',
+        color: '#FCD34B',
         marginBottom: 40,
         textAlign: 'center',
     },
@@ -88,8 +89,11 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         marginBottom: 20,
+        backgroundColor:"#FCD34B",
+        
     },
     buttonLabel: {
+        color:"#181A20",
         fontSize: 18,
     },
 });

@@ -1,5 +1,6 @@
 import { Text } from 'react-native';
 import { Redirect, router, Stack, Tabs } from 'expo-router';
+import { useAuth0 } from 'react-native-auth0';
 import { useEffect, useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -39,19 +40,19 @@ export default function AppLayout() {
     useEffect(()=>{validateUser()}, [authenticated])
 
 
-    return <Tabs screenOptions={{ headerShown: false }} initialRouteName='home'>
+    return <Tabs screenOptions={{ headerShown: false , tabBarStyle: { backgroundColor: "#FCD34B" }, tabBarActiveTintColor: "#181A20", tabBarInactiveTintColor: "#808184",}} initialRouteName='home' >
         <Tabs.Screen
             name="walletsPage"
             options={{
                 title: 'Wallets',
-                tabBarIcon: ({ color }) => <Entypo name="wallet" size={24} color={color} />,
+                tabBarIcon: ({ color }) => <Entypo name="wallet" size={30} color={color} />,
             }}
         />
         <Tabs.Screen
             name="home"
             options={{
                 title: 'Home',
-                tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />,
+                tabBarIcon: ({ color }) => <AntDesign name="home" size={30} color={color} />,
             }}
         />
         <Tabs.Screen
@@ -64,8 +65,27 @@ export default function AppLayout() {
             name="profile"
             options={{
                 title: 'Profile',
-                tabBarIcon: ({ color }) => <AntDesign name="user" size={24} color={color} />,
+                tabBarIcon: ({ color }) => <AntDesign name="user" size={30} color={color} />,
             }}
         />
+        {/* <Tabs.Screen
+            name="scan"
+            options={{
+                href: null
+            }}
+        /> */}
+        {/* <Tabs.Screen
+            name='transactions'
+            options={{
+                href: null,
+                headerShown: false
+            }}
+        /> */}
+        {/* <Tabs.Screen
+            name='payUpi'
+            options={{
+                href: null,
+            }}
+        /> */}
     </Tabs>;
 }

@@ -14,7 +14,6 @@ interface Transaction {
     recipient: string;
     date: string;
     chain: string;
-    logo: string;
 }
 
 interface TransactionListProps {
@@ -48,11 +47,11 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                     <List.Item
-                        titleStyle={{ color: '#a6a6a6' }}
-                        descriptionStyle={{ color: '#7b7f83' }}
+                        titleStyle={{ color: '#a6a6a6' ,width:"70%"}}
+                        descriptionStyle={{ color: '#7b7f83',width:"50%" }}
                         title={item.recipient}
                         description={`${item.chain}`}
-                        right={() => <Text style={styles.amount}>₹{item.amount.toFixed(2)}</Text>}
+                        right={() => <Text style={styles.amount}>₹{item.amount.toFixed(3)}</Text>}
                     />
                 )}
                 renderSectionHeader={({ section: { title } }) => (
