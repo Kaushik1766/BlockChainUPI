@@ -10,9 +10,6 @@ import Modal from "react-native-modal"
 import { Text, TextInput, Button, HelperText, Menu, useTheme, ActivityIndicator } from "react-native-paper"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 
-interface PayPageProps {
-    receiverUpiId: string
-}
 
 const PayPage: React.FC = () => {
     const [amount, setAmount] = useState("")

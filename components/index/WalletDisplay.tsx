@@ -2,7 +2,8 @@ import type React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Text, useTheme} from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
-import { Wallet } from "@/functions/walletFunctions";
+import { getEthWalletBalance, Wallet } from "@/functions/walletFunctions";
+import IndividualWallet from "./IndividualWallet";
 
 
 interface Props{
@@ -21,10 +22,7 @@ const WalletDisplay = ({chain, wallets}:Props) => {
         <View style={styles.chainCard} key={chain}>
             <Text style={styles.chainName}>{chainDetails[chain][0]}</Text>
             {wallets.map((wallet, walletIndex) => (
-                <View key={wallet.address} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 , position:"relative"}]}>
-                    {walletIndex === 0 && <Text style={styles.primaryText} >Primary</Text>}
-                    <Text style={styles.walletAddress}>{wallet.address}</Text>
-                </View>
+                <IndividualWallet wallet={wallet} walletIndex={walletIndex} key={walletIndex}></IndividualWallet>
             ))}
         </View>
     )
@@ -84,6 +82,9 @@ const styles = StyleSheet.create({
         borderRadius:10,
         padding:5,
         fontWeight:"bold"
+    },
+    eyeIcon: {
+        marginLeft: 4,
     }
 });
 export default WalletDisplay

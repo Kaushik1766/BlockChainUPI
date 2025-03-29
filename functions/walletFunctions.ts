@@ -39,6 +39,60 @@ const addWallet = async (privateKey: string, chain: string, setError: React.Disp
 
 export {addWallet}
 
+const getEthWalletBalance = async (address: string) => {
+    try {
+        let response = await axios.get("https://api-sepolia.etherscan.io/api",
+            {
+                params:{
+                    chainid: 1,
+                    module:"account",
+                    action:"balance",
+                    address: address,
+                    tag:"latest",
+                    apikey:""
+                }
+            }
+        )
+        if (response.data.result === "Missing/Invalid API Key"){
+            return 0
+        }
+        if (response.data.result){
+            let amount = parseFloat((response.data.result * 1e-18).toFixed(4));
+            return amount
+        }
+        return 0
+    }
+    catch (err){
+        console.log(err)
+        return 0
+    }
+}
+
+export {getEthWalletBalance}
+
+const getTrxWalletBalance = async (address: string) => {
+    try {
+        let response = await axios.post("https://api.shasta.trongrid.io/wallet/getaccount",
+            {
+                "address": address,
+                "visible": true
+            }
+        )
+        if (response.data.balance){
+            let amount = parseFloat((response.data.balance * 1e-6).toFixed(4));
+            return amount
+        }
+        return 0
+    }
+    catch (err){
+        console.log(err)
+        return 0
+    }
+}
+
+export {getTrxWalletBalance}
+
+
 const fetchWallets = async (setChainWallets: React.Dispatch<React.SetStateAction<Record<string, Wallet[]> | undefined>>) => {
         const possibleChains = ["eth", "trx"]
         try{
