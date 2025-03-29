@@ -15,7 +15,6 @@ export const checkPassword = async (password: string) =>{
         return true;
     }
     catch (err : any){
-        console.log(err);
         return false;
     }
 }

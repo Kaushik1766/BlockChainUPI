@@ -64,7 +64,7 @@ const ProfilePage: React.FC = () => {
                             />
                         </TouchableRipple>
                     </List.Section>
-                    <VerifyPassword visible={verifyPasswordVisibile} setVisible={setVerifyPasswordVisible}></VerifyPassword>
+                    <VerifyPassword visible={verifyPasswordVisibile} setVisible={setVerifyPasswordVisible} nextRoute="./changePassword"></VerifyPassword>
                 </ScrollView>
 
                 <Button
