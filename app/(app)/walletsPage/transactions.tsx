@@ -4,8 +4,12 @@ import TransactionList from '@/components/index/TransactionList'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '@/components/Header'
+import { useLocalSearchParams } from 'expo-router'
 
 export default function transactions() {
+    const { transactionAccount } = useLocalSearchParams();
+    console.log(transactionAccount)
+
     const transactions = [
         { id: "1", amount: 500, recipient: "John Doe", date: "2023-05-01", chain: "ETH", logo: "ETH" },
         { id: "2", amount: 1000, recipient: "Jane Smith", date: "2023-05-01", chain: "MATIC", logo: "MATIC" },
@@ -32,12 +36,6 @@ export default function transactions() {
             <View style={{
                 flex: 1,
             }}>
-                {/* <Text style={{
-                    fontSize: 24,
-                    fontWeight: 'bold',
-                    color: 'white',
-                    padding: 16,
-                }}>Past Transactions</Text> */}
                 <View style={{
                     flex: 1,
                 }}>

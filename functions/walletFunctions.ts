@@ -128,4 +128,38 @@ const fetchWallets = async (setChainWallets: React.Dispatch<React.SetStateAction
         }
     }
 
+const getEthWalletTransactions = async (address: string)=>{
+    try {
+        let response = await axios.get("https://api-sepolia.etherscan.io/api",
+            {
+                params:{
+                    chainid: 1,
+                    module:"account",
+                    action:"txlist",
+                    address: address,
+                    startblock:0,
+                    endblock:99999999,
+                    sort:"desc",
+                    tag:"latest",
+                    apikey:"RVYXH2RYAU135XQP3RK9438VB9Q25N6V4E5"
+                }
+            }
+        )
+        if (response.data.result === "Missing/Invalid API Key"){
+            return []
+        }
+        if (response.data.result){
+            let result = response.data.result.slice(0, 20);
+            return result
+        }
+        return []
+    }
+    catch (err){
+        console.log(err)
+        return 0
+    }
+}
+
+export {getEthWalletTransactions}
+
 export default fetchWallets

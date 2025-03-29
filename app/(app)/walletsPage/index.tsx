@@ -1,13 +1,14 @@
 import type React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, useTheme } from "react-native-paper";
-import { useUserStore } from "../UserContext";
+import { Button, Text, useTheme } from "react-native-paper";
+import { useUserStore } from "../../UserContext";
 import { useCallback, useEffect, useState } from "react";
-import fetchWallets, { Wallet } from "@/functions/walletFunctions";
+import fetchWallets, { getEthWalletTransactions, Wallet } from "@/functions/walletFunctions";
 import WalletDisplay from "@/components/index/WalletDisplay";
 import AddWallet from "@/components/index/AddWalet";
 import { AntDesign } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 
 
@@ -25,6 +26,7 @@ const WalletsPage: React.FC = () => {
         setUpdate(false)
     }, [update])
     
+    // getEthWalletTransactions("0x0fD236f3d36D3D62bbfaf931ae4c7c95dFb3A0Cc").then((el)=>{console.log(el)})
 
     return (
         <SafeAreaView style={styles.safeArea}>

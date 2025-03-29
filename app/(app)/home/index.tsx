@@ -16,11 +16,6 @@ const HomePage: React.FC = () => {
     const upiId = `${user?.Email?.substring(0, user.Email.indexOf('@'))}@chainupi`
     const theme = useTheme()
 
-    const handleScanPay = () => {
-        // Implement scan and pay functionality
-        console.log("Scan and Pay pressed")
-    }
-
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.scrollView}>
@@ -41,7 +36,6 @@ const HomePage: React.FC = () => {
                     {/* <QRCodeDisplay upiId={upiId} /> */}
                     {/* <ScanPayButton onPress={handleScanPay} /> */}
                     {/* <Link href={'/(app)/payUpi'} /> */}
-                    <LinkButton link="/(app)/home/transactions" title="Transactions" />
                     <LinkButton link="/(app)/home/scan" title="Scan and Pay" />
                     <LinkButton link="/(app)/home/payUpi" title="Pay with UPI ID" />
                     <LinkButton link="/(app)/home/payNFC" title="Contactless Payment" />
