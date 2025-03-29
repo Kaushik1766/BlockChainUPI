@@ -40,7 +40,6 @@ const addWallet = async (privateKey: string, chain: string, setError: React.Disp
 export {addWallet}
 
 const fetchWallets = async (setChainWallets: React.Dispatch<React.SetStateAction<Record<string, Wallet[]> | undefined>>) => {
-        console.log("called")
         const possibleChains = ["eth", "trx"]
         try{
             let token = await AsyncStorage.getItem('UPI-login-token')

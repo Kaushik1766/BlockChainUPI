@@ -10,10 +10,11 @@ import { RelativePathString, router } from "expo-router";
 interface Props {
     visible: boolean;
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    nextRoute: RelativePathString;
+    nextRoute?: RelativePathString;
+    setVerified?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const VerifyPassword= ({ visible, setVisible, nextRoute}: Props) => {
+const VerifyPassword= ({ visible, setVisible, nextRoute, setVerified}: Props) => {
     const theme = useTheme();
     
     const [password, setPassword] = useState("");
@@ -35,7 +36,12 @@ const VerifyPassword= ({ visible, setVisible, nextRoute}: Props) => {
                 return
             }
             revertVerifyPassword()
-            router.push(nextRoute)
+            if (nextRoute){
+                router.push(nextRoute)
+            }
+            if (setVerified){
+                setVerified(true)
+            }
         }
         catch(err){
             console.log(err)

@@ -25,7 +25,6 @@ const VerifyUPIPage: React.FC = () => {
         setError("")
         // upi veification
         console.log("Verifying UPI ID:", upiId)
-        // alert(`Verification process initiated for ${upiId}`)
         router.push({
             pathname: "/(app)/home/pay",
             params: {
