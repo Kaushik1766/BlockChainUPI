@@ -13,7 +13,6 @@ interface PayPageProps {
 const PayPage: React.FC = () => {
     const [amount, setAmount] = useState("")
     const [selectedChain, setSelectedChain] = useState("")
-    const [chainMenuVisible, setChainMenuVisible] = useState(false)
     const [error, setError] = useState("")
     const params = useLocalSearchParams();
     const receiverUpiId = params.upiId
@@ -21,17 +20,13 @@ const PayPage: React.FC = () => {
 
     const chains = [
         {
-            label: "Ethereum",
-            value: "Ethereum"
+            label: "Ethereum (eth)",
+            value: "eth"
         },
         {
-            label: "Polygon",
-            value: "Polygon"
+            label: "Tron (trx)",
+            value: "trx"
         },
-        {
-            label: "Binance Smart Chain",
-            value: "Binance Smart Chain"
-        }
     ]
 
     const validateAmount = (value: string) => {
@@ -95,34 +90,16 @@ const PayPage: React.FC = () => {
                             }}
                             labelField={"label"} valueField={"value"}
                         />
-                        {/* <Menu
-                            visible={chainMenuVisible}
-                            onDismiss={() => setChainMenuVisible(false)}
-                            anchor={
-                                <Button mode="outlined" onPress={() => setChainMenuVisible(true)} style={styles.dropdownButton}>
-                                    {selectedChain || "Select Chain"}
-                                </Button>
-                            }
-                        >
-                            {chains.map((chain) => (
-                                <Menu.Item
-                                    key={chain}
-                                    onPress={() => {
-                                        setSelectedChain(chain)
-                                        setChainMenuVisible(false)
-                                    }}
-                                    title={chain}
-                                />
-                            ))}
-                        </Menu> */}
                     </View>
 
                     <HelperText type="error" visible={!!error}>
                         {error}
                     </HelperText>
 
-                    <Button mode="contained" onPress={handlePay} style={styles.payButton} disabled={!amount || !selectedChain}>
-                        Pay
+                    <Button mode="contained" onPress={handlePay} style={[styles.payButton, (!amount || !selectedChain)&&{backgroundColor:"#1E1E1E"}]} disabled={!amount || !selectedChain}>
+                        <Text>
+                            Pay
+                        </Text>
                     </Button>
                 </View>
             </ScrollView>

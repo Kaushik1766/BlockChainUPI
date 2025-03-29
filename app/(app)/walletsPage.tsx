@@ -3,11 +3,12 @@ import { View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, useTheme } from "react-native-paper";
 import { useUserStore } from "../UserContext";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import fetchWallets, { Wallet } from "@/functions/walletFunctions";
 import WalletDisplay from "@/components/index/WalletDisplay";
 import AddWallet from "@/components/index/AddWalet";
 import { AntDesign } from "@expo/vector-icons";
+
 
 
 
@@ -16,10 +17,14 @@ const WalletsPage: React.FC = () => {
     const user = useUserStore((state)=>(state))
     const [chainWallets, setChainWallets] = useState<Record<string, Wallet[]>>();
     const [addWalletVisible, setAddWalletVisible] = useState(false)
-    const [defaultChain, setDefaultChain] = useState("eth")
+    const [update, setUpdate] = useState(true)
 
     
-    useEffect(()=>{fetchWallets(setChainWallets)}, [])
+    useEffect(()=>{
+        fetchWallets(setChainWallets)
+        setUpdate(false)
+    }, [update])
+    
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -27,18 +32,19 @@ const WalletsPage: React.FC = () => {
                 <Text style={styles.title}>Wallets</Text>
                 <View style={styles.container}>
                     {/* Primary Wallet Section */}
-                    <View style={styles.walletCard}>
+                    <View key={"upi"} style={styles.walletCard}>
                         <Text style={styles.upiAddress}>{`${user?.Email?.substring(0, user.Email.indexOf('@'))}@chainupi`}</Text>
                     </View>
 
 
                     {/* Supported Chains Section */}
-                    <View style={styles.section}>
+                    <View key={"wallets"} style={styles.section}>
                         <Text style={styles.sectionTitle}>Supported Chains</Text>
                         {chainWallets && Object.keys(chainWallets).map((el) => 
                             <WalletDisplay 
                             chain={el} 
-                            wallets={chainWallets[el]}/>)}
+                            wallets={chainWallets[el]}
+                            key={el}/>)}
                     </View>
 
                     <TouchableOpacity style={styles.addWalletButton} onPress={()=>{setAddWalletVisible(true);}}>
@@ -47,7 +53,7 @@ const WalletsPage: React.FC = () => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <AddWallet visible={addWalletVisible} setVisible={setAddWalletVisible}></AddWallet>
+            <AddWallet visible={addWalletVisible} setVisible={setAddWalletVisible} setUpdate={setUpdate}></AddWallet>
         </SafeAreaView>
     );
 };
@@ -123,7 +129,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         color: "#FFFFFF",
-        marginBottom: 15,
         textAlign: "center",
         marginTop: 15
     }

@@ -9,7 +9,6 @@ import { DefaultTheme as defaultTheme } from 'react-native-paper';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { PaperProvider } from 'react-native-paper';
-import { useAuth0, Auth0Provider } from 'react-native-auth0';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -43,14 +42,12 @@ export default function RootLayout() {
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     // <ThemeProvider value={DefaultTheme}>
-    <Auth0Provider domain={"dev-avbpamn8nlbn8lg3.us.auth0.com"} clientId={"AM64NAAD0FEMNNT34XgXHWuNhoTkEmse"}>
       <PaperProvider theme={darkTheme}>
         <ThemeProvider value={DarkTheme}>
           <Slot />
           <StatusBar style="auto" />
         </ThemeProvider>
       </PaperProvider>
-    </Auth0Provider>
     // </ThemeProvider>
   );
 }
