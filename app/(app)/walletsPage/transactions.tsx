@@ -6,6 +6,8 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import Header from '@/components/Header'
 import { useLocalSearchParams } from 'expo-router'
 import { getEthWalletTransactions, getTrxWalletTransactions } from '@/functions/walletFunctions'
+import bs58 from 'bs58';
+import { Buffer } from 'buffer';
 
 
 interface Transaction {
@@ -52,11 +54,11 @@ export default function transactions() {
                         "id": el.txID,
                         "amount": parseFloat((el.raw_data.contract[0].parameter.value.amount * 1e-6).toFixed(4)),
                         //@ts-ignore
-                        "recipient": el.raw_data.contract[0].parameter.value.owner_address.toUpperCase() == address.toUpperCase() ? el.raw_data.contract[0].parameter.value.to_address : el.raw_data.contract[0].parameter.value.owner_address,
+                        "recipient": el.raw_data.contract[0].parameter.value.owner_address.toUpperCase() == Buffer.from(bs58.decode(address)).toString('hex').slice(0, -8).toUpperCase() ? el.raw_data.contract[0].parameter.value.to_address : el.raw_data.contract[0].parameter.value.owner_address,
                         "date": new Date(el.raw_data.timestamp).toISOString().split('T')[0],
                         "chain": "trx",
                         //@ts-ignore
-                        "send": el.raw_data.contract[0].parameter.value.owner_address.toUpperCase() == address.toUpperCase() ? true : false
+                        "send": el.raw_data.contract[0].parameter.value.owner_address.toUpperCase() == Buffer.from(bs58.decode(address)).toString('hex').slice(0, -8).toUpperCase() ? true : false
                     }
                 })
                 setTransactionData(tData)
