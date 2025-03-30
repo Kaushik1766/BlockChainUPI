@@ -22,9 +22,9 @@ export default function RootLayout() {
     ...defaultTheme,
     colors: {
       ...defaultTheme.colors,
-      primary: '#FCD34B',
-      background: '#FCD34B',
-      surface: '#FCD34B',
+      primary: '#6F3DE4',
+      background: '#6F3DE4',
+      surface: '#6F3DE4',
       onSurface: '#FCD34B',
       onSurfaceVariant: '#FCD34B',
     },
@@ -42,12 +42,12 @@ export default function RootLayout() {
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     // <ThemeProvider value={DefaultTheme}>
-      <PaperProvider theme={darkTheme}>
-        <ThemeProvider value={DarkTheme}>
-          <Slot />
-          <StatusBar style="auto" />
-        </ThemeProvider>
-      </PaperProvider>
+    <PaperProvider theme={darkTheme}>
+      <ThemeProvider value={DarkTheme}>
+        <Slot />
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </PaperProvider>
     // </ThemeProvider>
   );
 }

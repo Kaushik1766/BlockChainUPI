@@ -12,46 +12,48 @@ export default function AppLayout() {
     const [authenticated, setAuthenticated] = useState(false);
 
     const validateUser = async () => {
-        try{
+        try {
             let token = await AsyncStorage.getItem('UPI-login-token')
 
-            if (token){
+            if (token) {
                 let tokenBody = token.split(".")
                 let bodyObject = JSON.parse(atob(tokenBody[1]))
 
-                let response = await axios.get("https://dev-chain-upi.azurewebsites.net/api/auth/check",{
-                    headers:{"Authorization":"Bearer "+token}
+                let response = await axios.get("https://dev-chain-upi.azurewebsites.net/api/auth/check", {
+                    headers: { "Authorization": "Bearer " + token }
                 })
 
                 useUserStore.setState(bodyObject)
                 setAuthenticated(true)
             }
-            else{
+            else {
                 router.replace("/Welcome");
             }
         }
-        catch(err){
+        catch (err) {
             console.log(err)
             router.replace("/Welcome")
         }
     }
 
 
-    useEffect(()=>{validateUser()}, [authenticated])
+    useEffect(() => { validateUser() }, [authenticated])
 
 
-    return <Tabs screenOptions={{ headerShown: false , tabBarStyle: { backgroundColor: "#FCD34B" }, tabBarActiveTintColor: "#181A20", tabBarInactiveTintColor: "#808184",}} initialRouteName='home' >
+    return <Tabs screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: "#703be7", }, tabBarActiveTintColor: "#FCD34B", tabBarInactiveTintColor: "#ccbaf7" }} initialRouteName='home' >
         <Tabs.Screen
             name="walletsPage"
             options={{
-                title: 'Wallets',
+                // title: 'Wallets',
+                tabBarShowLabel: false,
                 tabBarIcon: ({ color }) => <Entypo name="wallet" size={30} color={color} />,
             }}
         />
         <Tabs.Screen
             name="home"
             options={{
-                title: 'Home',
+                // title: 'Home',
+                tabBarShowLabel: false,
                 tabBarIcon: ({ color }) => <AntDesign name="home" size={30} color={color} />,
             }}
         />
@@ -64,7 +66,8 @@ export default function AppLayout() {
         <Tabs.Screen
             name="profile"
             options={{
-                title: 'Profile',
+                // title: 'Profile',
+                tabBarShowLabel: false,
                 tabBarIcon: ({ color }) => <AntDesign name="user" size={30} color={color} />,
             }}
         />

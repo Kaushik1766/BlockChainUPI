@@ -1,5 +1,5 @@
 import type React from "react";
-import { View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text, useTheme } from "react-native-paper";
 import { useUserStore } from "../../UserContext";
@@ -15,17 +15,17 @@ import { router } from "expo-router";
 
 const WalletsPage: React.FC = () => {
     const theme = useTheme();
-    const user = useUserStore((state)=>(state))
+    const user = useUserStore((state) => (state))
     const [chainWallets, setChainWallets] = useState<Record<string, Wallet[]>>();
     const [addWalletVisible, setAddWalletVisible] = useState(false)
     const [update, setUpdate] = useState(true)
 
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         fetchWallets(setChainWallets)
         setUpdate(false)
     }, [update])
-    
+
     // getEthWalletTransactions("0x0fD236f3d36D3D62bbfaf931ae4c7c95dFb3A0Cc").then((el)=>{console.log(el)})
 
     return (
@@ -42,14 +42,14 @@ const WalletsPage: React.FC = () => {
                     {/* Supported Chains Section */}
                     <View key={"wallets"} style={styles.section}>
                         <Text style={styles.sectionTitle}>Supported Chains</Text>
-                        {chainWallets && Object.keys(chainWallets).map((el) => 
-                            <WalletDisplay 
-                            chain={el} 
-                            wallets={chainWallets[el]}
-                            key={el}/>)}
+                        {chainWallets && Object.keys(chainWallets).map((el) =>
+                            <WalletDisplay
+                                chain={el}
+                                wallets={chainWallets[el]}
+                                key={el} />)}
                     </View>
 
-                    <TouchableOpacity style={styles.addWalletButton} onPress={()=>{setAddWalletVisible(true);}}>
+                    <TouchableOpacity style={styles.addWalletButton} onPress={() => { setAddWalletVisible(true); }}>
                         <AntDesign name="pluscircleo" size={20} color={theme.colors.primary} />
                         <Text style={styles.addWalletText}>Add Wallet</Text>
                     </TouchableOpacity>
@@ -63,7 +63,7 @@ const WalletsPage: React.FC = () => {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#121212",
+        backgroundColor: "#181A20",
     },
     scrollView: {
         flex: 1,
@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#FFFFFF",
         marginBottom: 12,
+        paddingTop: 36,
+        paddingBottom: 13,
     },
     chainCard: {
         backgroundColor: "#1E1E1E",
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     walletCard: {
-        backgroundColor: "#2C2C2C",
+        backgroundColor: "#7E61C1",
         borderRadius: 8,
         padding: 12,
         marginBottom: 8,
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     upiAddress: {
         fontSize: 18,
         color: "#FFFFFF",
-        alignSelf:"center"
+        alignSelf: "center"
     },
     title: {
         fontSize: 24,

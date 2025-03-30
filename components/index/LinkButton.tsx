@@ -3,7 +3,7 @@ import React from 'react';
 import { router } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function LinkButton({ link, title, icon }: { link: string, title: string, icon: any }) {
+export default function LinkButton({ link, title, icon, color }: { link: string, title: string, icon: any, color?: string }) {
     return (
         <TouchableNativeFeedback
             background={TouchableNativeFeedback.Ripple(
@@ -13,8 +13,8 @@ export default function LinkButton({ link, title, icon }: { link: string, title:
             useForeground={true}
             onPress={() => router.navigate(link)}
         >
-            <View style={styles.buttonContainer}>
-                <AntDesign name={icon} size={32} color="#181A20" style={styles.icon} />
+            <View style={[styles.buttonContainer, { backgroundColor: color || "#7E61C1" }]}>
+                <AntDesign name={icon} size={32} color="#ffffff" style={styles.icon} />
                 <Text style={styles.text}>{title}</Text>
             </View>
         </TouchableNativeFeedback>
@@ -23,7 +23,7 @@ export default function LinkButton({ link, title, icon }: { link: string, title:
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        backgroundColor: "#FCD34B",
+        backgroundColor: "#703be7",
         borderRadius: 8,
         marginBottom: 8,
         alignItems: 'center',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     text: {
-        color: '#181A20',
+        color: '#ffffff',
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',

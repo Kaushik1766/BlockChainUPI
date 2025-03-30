@@ -17,7 +17,7 @@ const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
     const hideModal = () => setVisible(false);
 
     return (
-            
+
         <View style={styles.container}>
             <Text style={styles.label}>Your UPI ID</Text>
             <View style={{
@@ -26,7 +26,7 @@ const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
                 alignItems: "center"
             }}>
                 <Text style={styles.upiId}>{upiId}</Text>
-                <AntDesign name="qrcode" size={24} color="#181A20" onPress={showModal} />
+                <AntDesign name="qrcode" size={24} color="white" onPress={showModal} />
             </View>
             <Modal
                 isVisible={visible}
@@ -45,7 +45,7 @@ const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
                 propagateSwipe={true}
             >
                 <View style={{
-                    backgroundColor: theme.colors.surface,
+                    backgroundColor: "#181A20",
                     height: '50%',
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20,
@@ -63,20 +63,20 @@ const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#FCD34B",
+        backgroundColor: "#6F3DE4",
         padding: 16,
         borderRadius: 8,
         marginBottom: 16,
     },
     label: {
-        fontSize: 14,
-        color: "#181A20",
+        fontSize: 16,
+        color: "#ffffff",
         marginBottom: 4,
     },
     upiId: {
         fontSize: 18,
         fontWeight: "bold",
-        color: "#181A20",
+        color: "#ffffff",
     },
 })
 

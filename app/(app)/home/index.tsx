@@ -13,7 +13,7 @@ import LinkButton from "@/components/index/LinkButton"
 import { useUserStore } from "@/app/UserContext"
 
 const HomePage: React.FC = () => {
-    const user = useUserStore((state)=>(state))
+    const user = useUserStore((state) => (state))
     const upiId = `${user?.Email?.substring(0, user.Email.indexOf('@'))}@chainupi`
 
     return (
@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
             <View style={styles.scrollView}>
                 <View style={styles.container}>
                     <UPIIdDisplay upiId={upiId} />
-                    <Text style={{ color: '#FCD34B',textAlign: 'center',fontSize: 24,fontStyle: 'italic',fontFamily: 'sans-serif',textTransform: 'capitalize',marginBottom:10,marginTop:25}}>Welcome,{user?.Name}</Text>
+                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 24, fontStyle: 'italic', fontFamily: 'sans-serif', textTransform: 'capitalize', marginBottom: 10, marginTop: 25 }}>Welcome, {user?.Name}</Text>
 
                     <LottieView
                         source={require("../../../assets/animations/upiAnimationNew.json")}
@@ -53,13 +53,13 @@ const HomePage: React.FC = () => {
 
                     </View>
                     </View> */}
-                     <View style={styles.container1}>
+                    <View style={styles.container1}>
                         {/* <LinkButton link="/(app)/home/transactions" title="Transaction" icon="profile" /> */}
-                        <LinkButton link="/(app)/home/scan" title="  Scan & Pay   "  icon="qrcode"/>
-                        <LinkButton link="/(app)/home/payUpi" title="Pay with UPI" icon="arrowright"/>
+                        <LinkButton link="/(app)/home/scan" title="  Scan & Pay   " icon="qrcode" />
+                        <LinkButton link="/(app)/home/payUpi" title="Pay with UPI" icon="arrowright" />
                         <LinkButton link="/(app)/home/payNFC" title="NFC Payment" icon="wallet" />
                     </View>
-                 
+
                 </View>
             </View>
         </SafeAreaView>
@@ -67,10 +67,10 @@ const HomePage: React.FC = () => {
 }
 
 const styles = StyleSheet.create({
-    welcomeText:{
-        color:"#FCD34B",
-        textAlign:"center",
-        
+    welcomeText: {
+        color: "#FCD34B",
+        textAlign: "center",
+
     },
     safeArea: {
         flex: 1,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         // justifyContent: 'center',
-      },
+    },
 
 })
 

@@ -13,7 +13,7 @@ import VerifyPassword from "@/components/index/VerifyPassword"
 
 const ProfilePage: React.FC = () => {
     // const navigation = useNavigation()
-    const user = useUserStore((state)=>(state))
+    const user = useUserStore((state) => (state))
     const [verifyPasswordVisibile, setVerifyPasswordVisible] = useState<boolean>(false);
 
     async function handleLogout() {
@@ -59,7 +59,7 @@ const ProfilePage: React.FC = () => {
                             <List.Item
                                 titleStyle={{ color: "red" }}
                                 title="Change Password"
-                                
+
                                 right={(props) => <List.Icon {...props} icon="chevron-right" color="white" />}
                             />
                         </TouchableRipple>
@@ -85,7 +85,7 @@ const ProfilePage: React.FC = () => {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#121212",
+        backgroundColor: "#181A20",
     },
     container: {
         flex: 1,
