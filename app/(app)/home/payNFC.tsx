@@ -13,34 +13,34 @@ const VerifyUPIPage: React.FC = () => {
     const [isNfcEnabled, setIsNfcEnabled] = useState<boolean | null>(null);
     const [refresh, setRefresh] = useState<number | null>(1)
     const [scanning, setScanning] = useState<number | null>(0)
-    
 
-    
+
+
     const checkNfcStatus = async () => {
         try {
             const supported = await NfcManager.isSupported();
             setIsSupported(supported);
-           
+
             if (supported) {
                 const enabled = await NfcManager.isEnabled();
                 setIsNfcEnabled(enabled);
-          }
+            }
         } catch (error) {
             console.error('Error checking NFC status:', error);
             setError("error in checking nfc status")
             setIsSupported(false);
         }
     };
-    
+
     useEffect(() => {
         checkNfcStatus();
-        if (refresh === 1){
-          setRefresh(0);
+        if (refresh === 1) {
+            setRefresh(0);
         }
-      }, [refresh]);
+    }, [refresh]);
 
 
-      
+
 
     const validateUpiId = (id: string) => {
         // const upiRegex = /^[\w.-]+@[\w.-]+$/
@@ -48,12 +48,12 @@ const VerifyUPIPage: React.FC = () => {
         return true
     }
 
-    const handleVerify = (upiId:string) => {
+    const handleVerify = (upiId: string) => {
         if (!validateUpiId(upiId)) {
             setError("Invalid UPI ID format")
             return
         }
-        
+
         setError("")
         console.log("Verifying UPI ID:", upiId)
         router.push({
@@ -64,39 +64,39 @@ const VerifyUPIPage: React.FC = () => {
         })
     }
 
-    async function readNdef() {   
+    async function readNdef() {
         setScanning(1);
         try {
-          await NfcManager.requestTechnology(NfcTech.Ndef);
-          
-          const tag = await NfcManager.getTag();
-        let payloads = [""]
-          if (tag?.ndefMessage) {
-            
-            payloads = tag.ndefMessage.map((content) => (content.payload)).map(el=>el.map((el)=>(String.fromCharCode(el))).join('').substring(3));
-          }
-          if (!!payloads[0]){
-            handleVerify(payloads[0])
-        }
+            await NfcManager.requestTechnology(NfcTech.Ndef);
+
+            const tag = await NfcManager.getTag();
+            let payloads = [""]
+            if (tag?.ndefMessage) {
+
+                payloads = tag.ndefMessage.map((content) => (content.payload)).map(el => el.map((el) => (String.fromCharCode(el))).join('').substring(3));
+            }
+            if (!!payloads[0]) {
+                handleVerify(payloads[0])
+            }
         } catch (ex) {
-          console.log('NFC Read Error:', ex);
+            console.log('NFC Read Error:', ex);
         } finally {
-          NfcManager.cancelTechnologyRequest();
-          setScanning(0)
+            NfcManager.cancelTechnologyRequest();
+            setScanning(0)
         }
-      }
-    
+    }
+
 
 
     if (isSupported === null && isNfcEnabled === null) {
         return (
             <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
-                <View>
-                    <Text style={styles.title}>Checking NFC support....</Text>
+                <View style={styles.container}>
+                    <View>
+                        <Text style={styles.title}>Checking NFC support....</Text>
+                    </View>
                 </View>
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
         );
     }
 
@@ -110,7 +110,7 @@ const VerifyUPIPage: React.FC = () => {
                             {error}
                         </HelperText>
                     </View>
-                    <Button mode="contained" onPress={()=>{
+                    <Button mode="contained" onPress={() => {
                         router.push({
                             pathname: "/(app)/home"
                         })
@@ -120,8 +120,8 @@ const VerifyUPIPage: React.FC = () => {
                 </View>
             </SafeAreaView>
         );
-      }
-    
+    }
+
     if (!isNfcEnabled) {
         return (
             <SafeAreaView style={styles.safeArea}>
@@ -132,13 +132,13 @@ const VerifyUPIPage: React.FC = () => {
                             {error}
                         </HelperText>
                     </View>
-                    <Button mode="contained" onPress={()=>{setRefresh(1)}} style={styles.button}>
+                    <Button mode="contained" onPress={() => { setRefresh(1) }} style={styles.button}>
                         Refresh
                     </Button>
                 </View>
             </SafeAreaView>
         );
-      }
+    }
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -152,9 +152,9 @@ const VerifyUPIPage: React.FC = () => {
                 <Button mode="contained" onPress={readNdef} style={styles.button}>
                     Tap
                 </Button>
-                <HelperText type="info" style={{alignSelf:"center", margin:16}} visible={!!scanning}>
-                        scanning...
-                    </HelperText>
+                <HelperText type="info" style={{ alignSelf: "center", margin: 16 }} visible={!!scanning}>
+                    scanning...
+                </HelperText>
             </View>
         </SafeAreaView>
     )
@@ -183,7 +183,8 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 16,
-        alignSelf:"center"
+        alignSelf: "center",
+        backgroundColor: "#6F3DE4",
     },
 })
 

@@ -1,6 +1,6 @@
 import { Text } from 'react-native';
 import { Redirect, router, Stack, Tabs } from 'expo-router';
-import { useAuth0 } from 'react-native-auth0';
+// import { useAuth0 } from 'react-native-auth0';
 import { useEffect, useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -12,48 +12,49 @@ export default function AppLayout() {
     const [authenticated, setAuthenticated] = useState(false);
 
     const validateUser = async () => {
-        try{
+        try {
             let token = await AsyncStorage.getItem('UPI-login-token')
 
-            if (token){
+            if (token) {
                 let tokenBody = token.split(".")
                 let bodyObject = JSON.parse(atob(tokenBody[1]))
 
-                let response = await axios.get("https://dev-chain-upi.azurewebsites.net/api/auth/check",{
-                    headers:{"Authorization":"Bearer "+token}
+                let response = await axios.get("https://dev-chain-upi.azurewebsites.net/api/auth/check", {
+                    headers: { "Authorization": "Bearer " + token }
                 })
 
-                console.log(bodyObject)
                 useUserStore.setState(bodyObject)
                 setAuthenticated(true)
             }
-            else{
+            else {
                 router.replace("/Welcome");
             }
         }
-        catch(err){
+        catch (err) {
             console.log(err)
             router.replace("/Welcome")
         }
     }
 
 
-    useEffect(()=>{validateUser()}, [authenticated])
+    useEffect(() => { validateUser() }, [authenticated])
 
 
-    return <Tabs screenOptions={{ headerShown: false }} initialRouteName='home'>
+    return <Tabs screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: "#703be7", }, tabBarActiveTintColor: "#FCD34B", tabBarInactiveTintColor: "#ccbaf7" }} initialRouteName='home' >
         <Tabs.Screen
             name="walletsPage"
             options={{
-                title: 'Wallets',
-                tabBarIcon: ({ color }) => <Entypo name="wallet" size={24} color={color} />,
+                // title: 'Wallets',
+                tabBarShowLabel: false,
+                tabBarIcon: ({ color }) => <Entypo name="wallet" size={30} color={color} />,
             }}
         />
         <Tabs.Screen
             name="home"
             options={{
-                title: 'Home',
-                tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />,
+                // title: 'Home',
+                tabBarShowLabel: false,
+                tabBarIcon: ({ color }) => <AntDesign name="home" size={30} color={color} />,
             }}
         />
         <Tabs.Screen
@@ -65,8 +66,9 @@ export default function AppLayout() {
         <Tabs.Screen
             name="profile"
             options={{
-                title: 'Profile',
-                tabBarIcon: ({ color }) => <AntDesign name="user" size={24} color={color} />,
+                // title: 'Profile',
+                tabBarShowLabel: false,
+                tabBarIcon: ({ color }) => <AntDesign name="user" size={30} color={color} />,
             }}
         />
         {/* <Tabs.Screen

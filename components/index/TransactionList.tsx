@@ -14,7 +14,7 @@ interface Transaction {
     recipient: string;
     date: string;
     chain: string;
-    logo: string;
+    send:boolean;
 }
 
 interface TransactionListProps {
@@ -48,12 +48,15 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                     <List.Item
-                        titleStyle={{ color: '#a6a6a6' }}
-                        descriptionStyle={{ color: '#7b7f83' }}
+                        titleStyle={{ color: '#a6a6a6', flexWrap: 'wrap' , width:'90%'}}
+                        descriptionStyle={{ color: '#7b7f83', flexWrap: 'wrap' }}
                         title={item.recipient}
-                        description={`${item.chain}`}
-                        right={() => <Text style={styles.amount}>₹{item.amount.toFixed(2)}</Text>}
+                        description={item.chain}
+                        titleNumberOfLines={2} // Ensures wrapping
+                        descriptionNumberOfLines={2}
+                        right={() => <Text style={[styles.amount, item.send?{color: "red"}:{color: "#4CAF50"}]}>{item.send?"-":"+"} {item.amount.toFixed(3)} {item.chain}</Text>}
                     />
+
                 )}
                 renderSectionHeader={({ section: { title } }) => (
                     <>
@@ -79,7 +82,6 @@ const styles = StyleSheet.create({
     amount: {
         fontSize: 16,
         fontWeight: "bold",
-        color: "#4CAF50",
     },
 })
 

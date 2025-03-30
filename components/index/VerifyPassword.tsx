@@ -4,34 +4,47 @@ import { Text, useTheme, Button } from "react-native-paper";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { addWallet } from "@/functions/walletFunctions";
+import { checkPassword } from "@/functions/authFunctions";
+import { RelativePathString, router } from "expo-router";
 
 interface Props {
     visible: boolean;
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    nextRoute?: RelativePathString;
+    setVerified?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddWallet = ({ visible, setVisible, setUpdate}: Props) => {
+const VerifyPassword= ({ visible, setVisible, nextRoute, setVerified}: Props) => {
     const theme = useTheme();
     
-    const [privateKey, setPrivateKey] = useState("");
-    const [selectedChain, setSelectedChain] = useState("eth");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("")
 
 
-    const revertAddWallet = () => {
+    const revertVerifyPassword = () => {
         setVisible(false);
-        setPrivateKey("")
-        setSelectedChain("eth")
+        setPassword("");
+        setError('');
     };
 
-    const saveWallet = async () => {
-        console.log("Private Key:", privateKey);
-        console.log("Selected Chain:", selectedChain);
-        let result = await addWallet( privateKey, selectedChain, setError)
-        if (result){
-            revertAddWallet();
-            setUpdate(true)
+    const verify = async () => {
+        console.log("password"+ password);
+        try {
+            let chk = await checkPassword(password)
+            if (!chk){
+                setError("Incorrect Password")
+                return
+            }
+            revertVerifyPassword()
+            if (nextRoute){
+                router.push(nextRoute)
+            }
+            if (setVerified){
+                setVerified(true)
+            }
+        }
+        catch(err){
+            console.log(err)
         }
 
     };
@@ -40,31 +53,23 @@ const AddWallet = ({ visible, setVisible, setUpdate}: Props) => {
         <Modal
             isVisible={visible}
             style={[styles.modal]}
-            onBackButtonPress={revertAddWallet}
-            onBackdropPress={revertAddWallet}
+            onBackButtonPress={revertVerifyPassword}
+            onBackdropPress={revertVerifyPassword}
         >
             <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-                <Text style={styles.title}>Add Wallet</Text>
-
-                <Picker
-                    selectedValue={selectedChain}
-                    onValueChange={(itemValue) => setSelectedChain(itemValue)}
-                    style={styles.picker}
-                >
-                    <Picker.Item label="Ethereum (ETH)" value="eth" />
-                    <Picker.Item label="Tron (TRX)" value="trx" />
-                </Picker>
+                <Text style={styles.title}>Verify Password</Text>
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter Private Key"
+                    placeholder="Enter Current Password"
                     placeholderTextColor="#999"
-                    value={privateKey}
-                    onChangeText={setPrivateKey}
+                    value={password}
+                    onChangeText={(value)=>{setPassword(value);setError('')}}
+                    secureTextEntry
                 />
                 {error ? <Text style={styles.errorText}>{error}</Text> : null}
-                <Button mode="contained" onPress={saveWallet} style={styles.saveButton}>
-                    Save Wallet
+                <Button mode="contained" onPress={verify} style={styles.saveButton}>
+                    Verify
                 </Button>
             </View>
         </Modal>
@@ -116,4 +121,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddWallet;
+export default VerifyPassword;

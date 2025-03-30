@@ -2,7 +2,10 @@ import type React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Text, useTheme} from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
-import { Wallet } from "@/functions/walletFunctions";
+import { getEthWalletBalance, Wallet } from "@/functions/walletFunctions";
+import IndividualWallet from "./IndividualWallet";
+import bs58 from 'bs58';
+import { Buffer } from 'buffer';
 
 
 interface Props{
@@ -15,24 +18,19 @@ const WalletDisplay = ({chain, wallets}:Props) => {
     const chainDetails : Record<string, string[]>= {
         "eth":["Ethereum", "eth"],
         "trx":["Tron", "trx"]
-    }
+    };
 
     return (
         <View style={styles.chainCard} key={chain}>
             <Text style={styles.chainName}>{chainDetails[chain][0]}</Text>
             {wallets.map((wallet, walletIndex) => (
-                <View key={walletIndex} style={[styles.walletCard, walletIndex === 0 && { borderColor: "#6200ee", borderWidth: 2 }]}>
-                    <Text style={styles.walletAddress}>{wallet.address}</Text>
-                    <Text style={styles.walletBalance}>{wallet.balance + " " + chainDetails[chain][1]}</Text>
-                </View>
+                <IndividualWallet wallet={wallet} walletIndex={walletIndex} key={walletIndex}></IndividualWallet>
             ))}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-
-
     chainCard: {
         backgroundColor: "#1E1E1E",
         borderRadius: 8,
@@ -74,6 +72,21 @@ const styles = StyleSheet.create({
         color: "#6200ee",
         marginLeft: 8,
     },
-
+    primaryText:{
+        fontSize: 12,
+        color: "#6200ee",
+        position:"absolute",
+        top:-15,
+        right:10,
+        backgroundColor: "#A0A0A0",
+        borderColor:"#6200ee",
+        borderWidth:2,
+        borderRadius:10,
+        padding:5,
+        fontWeight:"bold"
+    },
+    eyeIcon: {
+        marginLeft: 4,
+    }
 });
 export default WalletDisplay

@@ -8,10 +8,10 @@ const darkTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#6200ee',
-        background: '#121212',
-        surface: '#121212',
-        text: '#ffffff',
+        primary: '#FCD34B',
+        background: '#181A20',
+        surface: '#181A20',
+        text: '#FCD34B',
     },
 };
 
@@ -113,25 +113,25 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 20,
-        backgroundColor: '#121212',
+        backgroundColor: '#181A20',
     },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: '#FCD34B',
         textAlign: 'center',
         marginBottom: 20,
     },
     helper: {
         marginTop: 20,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: '#FCD34B',
         textAlign: 'center',
         marginBottom: 20,
     },
     input: {
         marginBottom: 16,
-        backgroundColor: '#1E1E1E',
+        backgroundColor: '#181A20',
     },
     button: {
         marginTop: 16,
