@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text, useTheme } from "react-native-paper";
 import { useUserStore } from "../../UserContext";
 import { useCallback, useEffect, useState } from "react";
-import fetchWallets, { getEthWalletTransactions, Wallet } from "@/functions/walletFunctions";
+import fetchWallets, { getEthWalletTransactions, getTrxWalletTransactions, Wallet } from "@/functions/walletFunctions";
 import WalletDisplay from "@/components/index/WalletDisplay";
 import AddWallet from "@/components/index/AddWalet";
 import { AntDesign } from "@expo/vector-icons";
@@ -27,6 +27,7 @@ const WalletsPage: React.FC = () => {
     }, [update])
     
     // getEthWalletTransactions("0x0fD236f3d36D3D62bbfaf931ae4c7c95dFb3A0Cc").then((el)=>{console.log(el)})
+    // getTrxWalletTransactions("TCZVZUQpj1jB1YEoCMmhdAeNbCenkisrTq")
 
     return (
         <SafeAreaView style={styles.safeArea}>

@@ -162,4 +162,21 @@ const getEthWalletTransactions = async (address: string)=>{
 
 export {getEthWalletTransactions}
 
+const getTrxWalletTransactions = async (address: string)=>{
+    try {
+        let response = await axios.get(`https://api.shasta.trongrid.io/v1/accounts/${address}/transactions`)
+        if (response.data.data){
+            let result = response.data.data.slice(0, 20);
+            return result
+        }
+        return []
+    }
+    catch (err){
+        console.log(err)
+        return []
+    }
+}
+
+export {getTrxWalletTransactions}
+
 export default fetchWallets
