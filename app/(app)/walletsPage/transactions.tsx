@@ -25,7 +25,6 @@ export default function transactions() {
     const [loading, setLoading] = useState(true)
     const [transactionData, setTransactionData] = useState<Transaction[] | undefined>(undefined)
 
-
     const getTransactions = async () => {
         if (chain === "eth") {
             //@ts-ignore
