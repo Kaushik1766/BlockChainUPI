@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView, TouchableOpacity, TouchableNativeFeedback
 import { SafeAreaView } from "react-native-safe-area-context"
 import UPIIdDisplay from "@/components/index/UPIIdDisplay"
 // import QRCodeDisplay from "../../../components/index/QRCodeDisplay"
-import { useAuth0 } from "react-native-auth0"
+// import { useAuth0 } from "react-native-auth0"
 import LottieView from "lottie-react-native"
 import { Link, router } from "expo-router"
 import { Text, useTheme } from "react-native-paper"
