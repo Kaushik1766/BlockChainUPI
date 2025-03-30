@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View ,Image} from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { Text, Button, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
-import { useAuth0 } from 'react-native-auth0';
+// import { useAuth0 } from 'react-native-auth0';
 import { router } from 'expo-router';
 
 const darkTheme = {
@@ -29,20 +29,20 @@ const WelcomePage = () => {
         <PaperProvider theme={darkTheme}>
             <View style={styles.container}>
                 <View style={styles.content}>
-                <Image  source={require("../assets/images/logo_transparent1.png")}  style={{ width: 400, height: 200 }} />
+                    <Image source={require("../assets/images/logo_transparent1.png")} style={{ width: 400, height: 200 }} />
                     {/* <Text style={styles.title}>Welcome to</Text> */}
                     {/* <Text style={styles.appName}>Chain UPI</Text>
                     <Text style={styles.subtitle}>Secure. Fast. Decentralized.</Text> */}
                 </View>
                 <Button
                     mode="contained"
-                    onPress={()=>{router.push("./Signup")}}
+                    onPress={() => { router.push("./Signup") }}
                     style={styles.button}
                     labelStyle={styles.buttonLabel}
                 >Signup</Button>
                 <Button
                     mode="contained"
-                    onPress={()=>{router.push("./Login")}}
+                    onPress={() => { router.push("./Login") }}
                     style={styles.button}
                     labelStyle={styles.buttonLabel}
                 >
@@ -89,11 +89,11 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         marginBottom: 20,
-        backgroundColor:"#FCD34B",
-        
+        backgroundColor: "#FCD34B",
+
     },
     buttonLabel: {
-        color:"#181A20",
+        color: "#181A20",
         fontSize: 18,
     },
 });
