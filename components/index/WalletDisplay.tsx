@@ -4,8 +4,6 @@ import { Text, useTheme} from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import { getEthWalletBalance, Wallet } from "@/functions/walletFunctions";
 import IndividualWallet from "./IndividualWallet";
-import bs58 from 'bs58';
-import { Buffer } from 'buffer';
 
 
 interface Props{
@@ -19,6 +17,7 @@ const WalletDisplay = ({chain, wallets}:Props) => {
         "eth":["Ethereum", "eth"],
         "trx":["Tron", "trx"]
     };
+
 
     return (
         <View style={styles.chainCard} key={chain}>

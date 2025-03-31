@@ -1,3 +1,4 @@
+import env from "@/config"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios, { AxiosError } from "axios"
 
@@ -49,7 +50,7 @@ const getEthWalletBalance = async (address: string) => {
                     action: "balance",
                     address: address,
                     tag: "latest",
-                    apikey: "RVYXH2RYAU135XQP3RK9438VB9Q25N6V4E"
+                    apikey: env.ETH_API_KEY
                 }
             }
         )
@@ -141,7 +142,7 @@ const getEthWalletTransactions = async (address: string) => {
                     endblock: 99999999,
                     sort: "desc",
                     tag: "latest",
-                    apikey: "RVYXH2RYAU135XQP3RK9438VB9Q25N6V4E5"
+                    apikey: env.ETH_API_KEY
                 }
             }
         )
