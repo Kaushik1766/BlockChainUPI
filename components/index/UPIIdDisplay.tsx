@@ -17,6 +17,7 @@ const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
     const hideModal = () => setVisible(false);
 
     return (
+
         <View style={styles.container}>
             <Text style={styles.label}>Your UPI ID</Text>
             <View style={{
@@ -44,7 +45,7 @@ const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
                 propagateSwipe={true}
             >
                 <View style={{
-                    backgroundColor: theme.colors.surface,
+                    backgroundColor: "#181A20",
                     height: '50%',
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20,
@@ -62,20 +63,20 @@ const UPIIdDisplay: React.FC<UPIIdDisplayProps> = ({ upiId }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#1E1E1E",
+        backgroundColor: "#6F3DE4",
         padding: 16,
         borderRadius: 8,
         marginBottom: 16,
     },
     label: {
-        fontSize: 14,
-        color: "#BDBDBD",
+        fontSize: 16,
+        color: "#ffffff",
         marginBottom: 4,
     },
     upiId: {
         fontSize: 18,
         fontWeight: "bold",
-        color: "#FFFFFF",
+        color: "#ffffff",
     },
 })
 

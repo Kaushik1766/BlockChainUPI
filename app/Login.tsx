@@ -12,9 +12,9 @@ const darkTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#6200ee',
-        background: '#121212',
-        surface: '#121212',
+        primary: '#FCD34B',
+        background: '#181A20',
+        surface: '#181A20',
         text: '#ffffff',
     },
 };
@@ -54,8 +54,6 @@ const Login = () => {
                 let end = response.headers["set-cookie"][0].indexOf(";")
                 let tokens = response.headers["set-cookie"][0].substring(6, end).split(".")
                 let bodyObject = JSON.parse(atob(tokens[1]))
-                console.log(tokens[1] + "login")
-                console.log(bodyObject + "login")
                 useUserStore.setState(bodyObject)
                 await AsyncStorage.setItem('UPI-login-token', response.headers["set-cookie"][0].substring(6, end))
             }
@@ -91,7 +89,7 @@ const Login = () => {
                     textColor='#ffffff'
                 />
                 {error ? <Text style={styles.errorText}>{error}</Text> : null}
-                <Button mode="contained" onPress={handleLogin} loading={loading} disabled={loading} style={styles.button}>
+                <Button mode="contained" onPress={handleLogin} loading={loading} disabled={loading} style={styles.button} labelStyle={styles.buttonLabel}>
                     Login
                 </Button>
             </View>
@@ -104,21 +102,27 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 20,
-        backgroundColor: '#121212',
+        backgroundColor: '#181A20',
     },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: '#FCD34B',
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 60,
     },
     input: {
-        marginBottom: 16,
-        backgroundColor: '#1E1E1E',
+        marginBottom: 30,
+        backgroundColor: '#181A20',
     },
     button: {
         marginTop: 16,
+        backgroundColor:"#FCD34B",
+        color:"#181A20"
+    },
+    buttonLabel: {
+        color:"#181A20",
+        fontSize: 18,
     },
     errorText: {
         color: 'red',
