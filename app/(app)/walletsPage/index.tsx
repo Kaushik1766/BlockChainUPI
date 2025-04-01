@@ -2,7 +2,7 @@ import type React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text, useTheme } from "react-native-paper";
-import { useUserStore } from "../../UserContext";
+import { useUserStore } from "../../../functions/userContext";
 import { useCallback, useEffect, useState } from "react";
 import fetchWallets, { getEthWalletTransactions, getTrxWalletTransactions, Wallet } from "@/functions/walletFunctions";
 import WalletDisplay from "@/components/index/WalletDisplay";

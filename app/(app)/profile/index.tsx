@@ -2,12 +2,11 @@ import type React from "react"
 import { View, StyleSheet, ScrollView } from "react-native"
 import { Text, Button, Divider, List, TouchableRipple } from "react-native-paper"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { useNavigation } from "@react-navigation/native"
 import { router } from "expo-router"
-import { useUserStore } from "@/app/UserContext"
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useUserStore } from "@/functions/userContext"
 import { useState } from "react"
 import VerifyPassword from "@/components/index/VerifyPassword"
+import LogoutButton from "@/components/index/LogoutButton"
 
 
 
@@ -15,19 +14,6 @@ const ProfilePage: React.FC = () => {
     // const navigation = useNavigation()
     const user = useUserStore((state) => (state))
     const [verifyPasswordVisibile, setVerifyPasswordVisible] = useState<boolean>(false);
-
-    async function handleLogout() {
-        try {
-            useUserStore.setState(undefined)
-            await AsyncStorage.removeItem('UPI-login-token')
-            let res = await AsyncStorage.getItem('UPI-login-token')
-            console.log(res + "logout")
-            router.navigate("/Welcome")
-        }
-        catch (error) {
-            console.error(error)
-        }
-    }
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -66,17 +52,7 @@ const ProfilePage: React.FC = () => {
                     </List.Section>
                     <VerifyPassword visible={verifyPasswordVisibile} setVisible={setVerifyPasswordVisible} nextRoute="./changePassword"></VerifyPassword>
                 </ScrollView>
-
-                <Button
-                    mode="contained"
-                    onPress={handleLogout}
-                    style={styles.logoutButton}
-                    contentStyle={styles.logoutButtonContent}
-                    labelStyle={styles.logoutButtonLabel}
-                    icon="logout"
-                >
-                    Logout
-                </Button>
+                <LogoutButton/>
             </View>
         </SafeAreaView>
     )

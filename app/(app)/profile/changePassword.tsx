@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
-import axios from 'axios';
 import { router } from 'expo-router';
-import { checkPassword, changeUserPassword } from '@/functions/authFunctions';
+import {changeUserPassword } from '@/functions/authFunctions';
 
 const darkTheme = {
     ...DefaultTheme,

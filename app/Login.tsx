@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View} from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useUserStore } from './UserContext';
-import { State } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
+import { login } from '@/functions/authFunctions';
 
 
 const darkTheme = {
@@ -24,8 +21,10 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [loggedin, setLoggedIn] = useState(false);
 
     const handleLogin = async () => {
+        console.log("hello")
         if (!email && !password) {
             setError('Please enter both email and password.');
             return;
@@ -42,23 +41,12 @@ const Login = () => {
         setLoading(true);
         
         try {
-            const response = await axios.post('https://dev-chain-upi.azurewebsites.net/api/auth/login', {
-                "email": email,
-                "password": password,
-            }, {
-                headers:{
-                    "set-cookie":""
-                }
-            });
-            if (response.headers["set-cookie"]){
-                let end = response.headers["set-cookie"][0].indexOf(";")
-                let tokens = response.headers["set-cookie"][0].substring(6, end).split(".")
-                let bodyObject = JSON.parse(atob(tokens[1]))
-                useUserStore.setState(bodyObject)
-                await AsyncStorage.setItem('UPI-login-token', response.headers["set-cookie"][0].substring(6, end))
-            }
+            let response = await login(email, password)
             console.log('Login successful:', response.data);
-            router.push('/')
+            setLoggedIn(true);
+            setTimeout(()=>{
+                router.push('/')
+            }, 1000)
         } catch (err: any) {
             console.log('Login failed:', err.toJSON());
             setError(err.response?.data?.message || 'Incorrect email or password');
@@ -89,9 +77,15 @@ const Login = () => {
                     textColor='#ffffff'
                 />
                 {error ? <Text style={styles.errorText}>{error}</Text> : null}
-                <Button mode="contained" onPress={handleLogin} loading={loading} disabled={loading} style={styles.button} labelStyle={styles.buttonLabel}>
+                <Button mode="contained"
+                onPress={handleLogin}
+                loading={loading}
+                disabled={loading}
+                style={styles.button}
+                labelStyle={styles.buttonLabel}>
                     Login
                 </Button>
+                {loggedin && <Text style={{color:"white", alignSelf:"center", marginTop:10}}>Login successful.. leading to home</Text>}
             </View>
         </PaperProvider>
     );

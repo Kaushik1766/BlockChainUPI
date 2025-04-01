@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
-import axios from 'axios';
 import { router } from 'expo-router';
+import { signup } from '@/functions/authFunctions';
 
 const darkTheme = {
     ...DefaultTheme,
@@ -37,11 +37,7 @@ const Login = () => {
         setLoading(true);
         
         try {
-            const response = await axios.post('https://dev-chain-upi.azurewebsites.net/api/auth/signup', {
-                "username": username,
-                "email": email,
-                "password": password,
-            });
+            const response = await signup(username, email, password);
             setSignedUp(true)
             console.log('Signup successful:', response.data);
             setTimeout(()=>{

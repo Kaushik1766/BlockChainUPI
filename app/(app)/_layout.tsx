@@ -4,40 +4,22 @@ import { Redirect, router, Stack, Tabs } from 'expo-router';
 import { useEffect, useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
-import { useUserStore } from '../UserContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import { validateUser } from '@/functions/authFunctions';
 
 export default function AppLayout() {
     const [authenticated, setAuthenticated] = useState(false);
 
-    const validateUser = async () => {
+    const validation = async () => {
         try {
-            let token = await AsyncStorage.getItem('UPI-login-token')
-
-            if (token) {
-                let tokenBody = token.split(".")
-                let bodyObject = JSON.parse(atob(tokenBody[1]))
-
-                let response = await axios.get("https://dev-chain-upi.azurewebsites.net/api/auth/check", {
-                    headers: { "Authorization": "Bearer " + token }
-                })
-
-                useUserStore.setState(bodyObject)
-                setAuthenticated(true)
-            }
-            else {
-                router.replace("/Welcome");
-            }
+            await validateUser()
+            setAuthenticated(true)
         }
         catch (err) {
-            console.log(err)
             router.replace("/Welcome")
         }
     }
 
-
-    useEffect(() => { validateUser() }, [authenticated])
+    useEffect(() => { if (!authenticated){validation()}}, [authenticated])
 
 
     return <Tabs screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: "#703be7", }, tabBarActiveTintColor: "#FCD34B", tabBarInactiveTintColor: "#ccbaf7" }} initialRouteName='home' >
@@ -71,24 +53,5 @@ export default function AppLayout() {
                 tabBarIcon: ({ color }) => <AntDesign name="user" size={30} color={color} />,
             }}
         />
-        {/* <Tabs.Screen
-            name="scan"
-            options={{
-                href: null
-            }}
-        /> */}
-        {/* <Tabs.Screen
-            name='transactions'
-            options={{
-                href: null,
-                headerShown: false
-            }}
-        /> */}
-        {/* <Tabs.Screen
-            name='payUpi'
-            options={{
-                href: null,
-            }}
-        /> */}
     </Tabs>;
 }

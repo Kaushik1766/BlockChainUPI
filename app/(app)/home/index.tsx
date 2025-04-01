@@ -10,7 +10,7 @@ import { Text, useTheme } from "react-native-paper"
 import { Button } from "react-native-paper"
 import { AntDesign } from "@expo/vector-icons"
 import LinkButton from "@/components/index/LinkButton"
-import { useUserStore } from "@/app/UserContext"
+import { useUserStore } from "@/functions/userContext"
 
 const HomePage: React.FC = () => {
     const user = useUserStore((state) => (state))
